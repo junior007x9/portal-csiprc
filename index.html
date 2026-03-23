@@ -24,8 +24,6 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            
-            /* FUNDO VIVO: Tons de Joias Profundas (Não Preto) */
             background: linear-gradient(-45deg, #1A2238, #2D1B4D, #123C35, #1F3C4D);
             background-size: 400% 400%;
             animation: gradientMove 15s ease infinite;
@@ -37,7 +35,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* FUNDO DE AURA NEON (Reforçado para "Viver") */
         .bg {
             position: fixed;
             width: 100%;
@@ -57,7 +54,7 @@
         }
 
         /* =========================================
-           HEADER (Simples e Alinhado)
+           HEADER
            ========================================= */
         header {
             display: flex;
@@ -99,8 +96,6 @@
             padding: 0 20px;
         }
 
-        /* Botão Sair Removido */
-
         /* =========================================
            MAIN E CONTEÚDO
            ========================================= */
@@ -110,6 +105,7 @@
             flex-direction: column;
             align-items: center;
             padding-bottom: 50px;
+            width: 100%;
         }
 
         h2 {
@@ -119,7 +115,8 @@
             letter-spacing: 2px;
             color: rgba(255, 255, 255, 0.9);
             text-shadow: 0 0 10px rgba(255,255,255,0.3);
-            animation: fadeIn 1.5s ease-out;
+            text-align: center;
+            padding: 0 15px;
         }
 
         .banner {
@@ -129,10 +126,9 @@
             align-items: center;
             padding: 15px 35px;
             border-radius: 15px;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-            animation: fadeIn 2s ease-out;
         }
 
         .banner:hover {
@@ -140,37 +136,29 @@
             box-shadow: 0 15px 35px rgba(255, 214, 0, 0.4);
         }
 
-        .banner img { width: 160px; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        .banner img { width: 150px; }
 
         /* =========================================
-           CARDS (Sempre Harmonizados)
+           CARDS (CSS GRID - Responsividade Suprema)
            ========================================= */
         .cards {
-            display: flex;
-            justify-content: center;
-            align-items: stretch; /* Garante altura igual */
-            gap: 40px;
+            display: grid;
+            /* A mágica acontece aqui: Cria colunas automáticas de no mínimo 300px */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
             width: 100%;
             max-width: 1200px;
-            padding: 0 20px;
+            padding: 0 25px;
         }
 
         .card {
-            flex: 1;
-            min-width: 280px;
-            max-width: 350px;
             display: flex;
             flex-direction: column;
-            padding: 50px 30px 40px;
+            padding: 45px 30px 35px;
             border-radius: 25px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.1); /* Ligeiramente mais brilhante */
+            background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             cursor: pointer;
             text-decoration: none;
@@ -183,9 +171,9 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
-        .card:nth-child(1) { animation-delay: 0.2s, 0s; }
-        .card:nth-child(2) { animation-delay: 0.4s, 2s; }
-        .card:nth-child(3) { animation-delay: 0.6s, 4s; }
+        .card:nth-child(1) { animation-delay: 0.1s, 0s; }
+        .card:nth-child(2) { animation-delay: 0.3s, 2s; }
+        .card:nth-child(3) { animation-delay: 0.5s, 4s; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(50px); }
@@ -194,27 +182,25 @@
 
         @keyframes floatCard {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
 
         .card:hover {
             animation-play-state: paused;
-            transform: translateY(-15px) scale(1.03) !important;
+            transform: translateY(-12px) scale(1.02) !important;
             border-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* NEON BASE Reforçado */
         .blue { box-shadow: 0 0 25px rgba(0, 229, 255, 0.15); border-bottom: 3px solid #00e5ff; }
         .red { box-shadow: 0 0 25px rgba(255, 61, 0, 0.15); border-bottom: 3px solid #ff3d00; }
         .green { box-shadow: 0 0 25px rgba(0, 230, 118, 0.15); border-bottom: 3px solid #00e676; }
 
-        /* NEON HOVER Reforçado */
-        .blue:hover { box-shadow: 0 20px 50px rgba(0, 229, 255, 0.4); }
-        .red:hover { box-shadow: 0 20px 50px rgba(255, 61, 0, 0.4); }
-        .green:hover { box-shadow: 0 20px 50px rgba(0, 230, 118, 0.4); }
+        .blue:hover { box-shadow: 0 20px 40px rgba(0, 229, 255, 0.35); }
+        .red:hover { box-shadow: 0 20px 40px rgba(255, 61, 0, 0.35); }
+        .green:hover { box-shadow: 0 20px 40px rgba(0, 230, 118, 0.35); }
 
         /* =========================================
-           CONTEÚDO INTERNO DOS CARDS
+           CONTEÚDO E BOTÕES DOS CARDS
            ========================================= */
         .card-content {
             flex-grow: 1; 
@@ -230,40 +216,35 @@
         }
 
         .icon svg {
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             stroke: rgba(255, 255, 255, 0.95);
             fill: none;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .card:hover .icon svg {
             transform: scale(1.15) translateY(-5px);
             stroke: #fff;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
         }
 
         .card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
         .card p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1.5;
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
-        /* =========================================
-           BOTÕES (Sempre alinhados)
-           ========================================= */
         .card button {
             width: 100%;
-            padding: 16px;
+            padding: 15px;
             border-radius: 30px;
             border: none;
             font-weight: 800;
@@ -272,11 +253,9 @@
             color: white;
             pointer-events: none;
             margin-top: auto; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            filter: brightness(1.1); /* Ligeiramente mais vivo */
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
         }
 
         .blue button { background: linear-gradient(135deg, #00b4d8, #0077b6); }
@@ -284,44 +263,74 @@
         .green button { background: linear-gradient(135deg, #00b45d, #008f4c); }
 
         .card:hover button {
-            transform: translateY(-5px);
+            transform: translateY(-4px);
             letter-spacing: 2px;
-            filter: brightness(1.3); /* Brilha muito no hover */
+            filter: brightness(1.2);
         }
-        
-        .blue:hover button { box-shadow: 0 10px 25px rgba(0, 180, 216, 0.6); }
-        .red:hover button { box-shadow: 0 10px 25px rgba(232, 93, 4, 0.6); }
-        .green:hover button { box-shadow: 0 10px 25px rgba(0, 180, 93, 0.6); }
 
         /* =========================================
            FOOTER
            ========================================= */
         footer {
             text-align: center;
-            padding: 25px;
-            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.7);
         }
 
         /* =========================================
-           RESPONSIVIDADE
+           ORGANIZAÇÃO PARA CELULARES (Mobile)
            ========================================= */
-        @media (max-width: 1024px) {
-            .cards { flex-wrap: wrap; }
-            .card { min-width: 45%; max-width: 45%;}
+        @media (max-width: 768px) {
+            /* Aperta o header e coloca os logos lado a lado com título embaixo */
+            header {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                padding: 20px;
+                margin: 15px;
+            }
+            
+            .logo-left, .logo-right { 
+                width: 70px; /* Logos menores no celular */
+            }
+            
+            header h1 { 
+                font-size: 1.15rem; 
+                order: 3; /* Joga o título para debaixo dos logos */
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            h2 { font-size: 1rem; margin-bottom: 20px; }
+            
+            .banner { padding: 12px 25px; margin-bottom: 40px; }
+            .banner img { width: 120px; }
+
+            /* Espaçamento das margens na tela do celular */
+            .cards { 
+                padding: 0 15px; 
+                gap: 25px; 
+            }
+            
+            .card { 
+                padding: 35px 20px 25px; /* Reduz espaço interno no celular */
+            }
+
+            .icon svg { width: 60px; height: 60px; }
+            
+            .card h3 { font-size: 1.15rem; }
+            .card p { font-size: 0.85rem; margin-bottom: 25px; }
+            
+            .card button { padding: 14px; font-size: 0.9rem;}
         }
 
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 15px; text-align: center; margin: 15px; padding: 25px 15px;}
-            header h1 { font-size: 1.1rem; padding: 0;}
-            .logo-left, .logo-right { width: 90px; }
-            
-            .cards { padding: 0 15px; gap: 20px;}
-            .card { min-width: 100%; max-width: 100%; margin-bottom: 0px; padding: 40px 20px 30px;}
-            .card p { font-size: 0.9rem; margin-bottom: 25px;}
+        /* Tela Minúscula (ex: iPhone SE antigo) */
+        @media (max-width: 380px) {
+            header h1 { font-size: 1rem; }
+            .cards { grid-template-columns: 1fr; } /* Força uma coluna única independentemente do minmax */
         }
     </style>
 </head>
