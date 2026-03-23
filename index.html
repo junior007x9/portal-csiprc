@@ -139,11 +139,10 @@
         .banner img { width: 150px; }
 
         /* =========================================
-           CARDS (CSS GRID - Responsividade Suprema)
+           CARDS (CSS GRID)
            ========================================= */
         .cards {
             display: grid;
-            /* A mágica acontece aqui: Cria colunas automáticas de no mínimo 300px */
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 35px;
             width: 100%;
@@ -269,22 +268,45 @@
         }
 
         /* =========================================
-           FOOTER
+           FOOTER COM ASSINATURA DO JUNIOR
            ========================================= */
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 25px 20px;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             font-size: 0.85rem;
             color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        .footer-rights {
+            margin-bottom: 8px;
+        }
+
+        /* Estilo da Assinatura */
+        .dev-signature {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.5px;
+        }
+
+        .dev-signature span {
+            color: #00e5ff; /* Azul Neon para destacar o nome */
+            font-weight: 700;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
+
+        .dev-signature i {
+            color: #ff3d00; /* Coração vermelho para dar aquele toque de dedicação */
+            font-style: normal;
         }
 
         /* =========================================
-           ORGANIZAÇÃO PARA CELULARES (Mobile)
+           ORGANIZAÇÃO PARA CELULARES
            ========================================= */
         @media (max-width: 768px) {
-            /* Aperta o header e coloca os logos lado a lado com título embaixo */
             header {
                 flex-wrap: wrap;
                 justify-content: center;
@@ -292,45 +314,22 @@
                 padding: 20px;
                 margin: 15px;
             }
-            
-            .logo-left, .logo-right { 
-                width: 70px; /* Logos menores no celular */
-            }
-            
-            header h1 { 
-                font-size: 1.15rem; 
-                order: 3; /* Joga o título para debaixo dos logos */
-                width: 100%;
-                margin-top: 5px;
-            }
-
+            .logo-left, .logo-right { width: 70px; }
+            header h1 { font-size: 1.15rem; order: 3; width: 100%; margin-top: 5px; }
             h2 { font-size: 1rem; margin-bottom: 20px; }
-            
             .banner { padding: 12px 25px; margin-bottom: 40px; }
             .banner img { width: 120px; }
-
-            /* Espaçamento das margens na tela do celular */
-            .cards { 
-                padding: 0 15px; 
-                gap: 25px; 
-            }
-            
-            .card { 
-                padding: 35px 20px 25px; /* Reduz espaço interno no celular */
-            }
-
+            .cards { padding: 0 15px; gap: 25px; }
+            .card { padding: 35px 20px 25px; }
             .icon svg { width: 60px; height: 60px; }
-            
             .card h3 { font-size: 1.15rem; }
             .card p { font-size: 0.85rem; margin-bottom: 25px; }
-            
             .card button { padding: 14px; font-size: 0.9rem;}
         }
 
-        /* Tela Minúscula (ex: iPhone SE antigo) */
         @media (max-width: 380px) {
             header h1 { font-size: 1rem; }
-            .cards { grid-template-columns: 1fr; } /* Força uma coluna única independentemente do minmax */
+            .cards { grid-template-columns: 1fr; } 
         }
     </style>
 </head>
@@ -399,7 +398,8 @@
     </main>
 
     <footer>
-        <p>© 2026 FUNAC / CSIPRC. Região dos Cocais. Todos os direitos reservados.</p>
+        <p class="footer-rights">© 2026 FUNAC / CSIPRC. Região dos Cocais. Todos os direitos reservados.</p>
+        <p class="dev-signature">Desenvolvido com <i>❤</i> por <span>Junior</span> (Socioeducador)</p>
     </footer>
 
 </body>
