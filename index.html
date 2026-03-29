@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Integrado CSIPRC - Região dos Cocais</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
@@ -20,131 +20,136 @@
 
         body {
             min-height: 100vh;
-            color: white;
+            color: #f8fafc;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(-45deg, #1A2238, #2D1B4D, #123C35, #1F3C4D);
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
+            background-color: #0f172a; /* Tom escuro elegante */
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
+        /* Fundo com luzes suaves */
         .bg {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 15% 20%, rgba(0, 229, 255, 0.25), transparent 45%),
-                radial-gradient(circle at 85% 30%, rgba(255, 61, 0, 0.25), transparent 45%),
-                radial-gradient(circle at 50% 80%, rgba(0, 230, 118, 0.25), transparent 45%);
-            filter: blur(70px);
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
             z-index: -1;
-            animation: pulseAura 10s infinite alternate ease-in-out;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.15), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(220, 38, 38, 0.12), transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.12), transparent 50%);
+            animation: pulseAura 15s infinite alternate ease-in-out;
         }
 
         @keyframes pulseAura {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.15); opacity: 1; }
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
 
         /* =========================================
-           HEADER
+           CABEÇALHO (HEADER)
            ========================================= */
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 50px;
-            margin: 20px 40px;
+            padding: 15px 40px;
+            margin: 25px auto;
+            width: 95%;
+            max-width: 1400px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: fadeDown 1s ease-out;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeDown 0.8s ease-out;
         }
 
         @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-30px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .logo-left, .logo-right {
-            width: 110px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            width: 120px;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
         .logo-left:hover, .logo-right:hover {
-            transform: scale(1.15) rotate(-3deg);
+            transform: scale(1.08);
         }
 
         header h1 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             text-align: center;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 15px rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+            color: #ffffff;
             flex: 1;
             padding: 0 20px;
         }
 
         /* =========================================
-           MAIN E CONTEÚDO
+           CONTEÚDO PRINCIPAL
            ========================================= */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
             width: 100%;
         }
 
         h2 {
             margin-top: 20px;
-            margin-bottom: 25px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            color: #94a3b8;
+            text-transform: uppercase;
             text-align: center;
             padding: 0 15px;
+            animation: fadeIn 1s ease-out 0.3s both;
         }
 
         .banner {
-            background: linear-gradient(135deg, #ffd600, #f57f17);
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            padding: 15px 35px;
-            border-radius: 15px;
+            padding: 10px;
+            border-radius: 16px;
             margin-bottom: 50px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
+            animation: fadeIn 1s ease-out 0.5s both;
         }
 
         .banner:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 15px 35px rgba(255, 214, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255, 214, 0, 0.15);
+            border-color: rgba(255, 214, 0, 0.3);
         }
 
-        .banner img { width: 150px; }
+        .banner img { 
+            width: 160px; 
+            border-radius: 8px;
+        }
 
         /* =========================================
-           CARDS (CSS GRID)
+           CARTÕES (CARDS)
            ========================================= */
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 35px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
             width: 100%;
             max-width: 1200px;
             padding: 0 25px;
@@ -153,53 +158,62 @@
         .card {
             display: flex;
             flex-direction: column;
-            padding: 45px 30px 35px;
-            border-radius: 25px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px 30px;
+            border-radius: 24px;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
             text-decoration: none;
             color: white;
             text-align: center;
             position: relative;
+            overflow: hidden;
             
             opacity: 0;
-            animation: fadeUp 0.8s forwards ease-out, floatCard 6s infinite ease-in-out;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            animation: fadeUp 0.8s forwards ease-out;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .card:nth-child(1) { animation-delay: 0.1s, 0s; }
-        .card:nth-child(2) { animation-delay: 0.3s, 2s; }
-        .card:nth-child(3) { animation-delay: 0.5s, 4s; }
+        .card:nth-child(1) { animation-delay: 0.6s; }
+        .card:nth-child(2) { animation-delay: 0.8s; }
+        .card:nth-child(3) { animation-delay: 1.0s; }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(50px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            transition: all 0.4s ease;
+        }
+
+        /* Cores específicas de cada cartão */
+        .blue::before { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+        .red::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .green::before { background: linear-gradient(90deg, #10b981, #34d399); }
 
         .card:hover {
-            animation-play-state: paused;
-            transform: translateY(-12px) scale(1.02) !important;
-            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-10px);
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
-        .blue { box-shadow: 0 0 25px rgba(0, 229, 255, 0.15); border-bottom: 3px solid #00e5ff; }
-        .red { box-shadow: 0 0 25px rgba(255, 61, 0, 0.15); border-bottom: 3px solid #ff3d00; }
-        .green { box-shadow: 0 0 25px rgba(0, 230, 118, 0.15); border-bottom: 3px solid #00e676; }
-
-        .blue:hover { box-shadow: 0 20px 40px rgba(0, 229, 255, 0.35); }
-        .red:hover { box-shadow: 0 20px 40px rgba(255, 61, 0, 0.35); }
-        .green:hover { box-shadow: 0 20px 40px rgba(0, 230, 118, 0.35); }
+        .blue:hover { box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15); }
+        .red:hover { box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15); }
+        .green:hover { box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15); }
 
         /* =========================================
-           CONTEÚDO E BOTÕES DOS CARDS
+           ÍCONES E TEXTOS DOS CARTÕES
            ========================================= */
         .card-content {
             flex-grow: 1; 
@@ -208,127 +222,140 @@
             align-items: center;
         }
 
-        .icon {
-            margin-bottom: 25px;
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            transition: transform 0.5s ease;
         }
 
-        .icon svg {
-            width: 70px;
-            height: 70px;
-            stroke: rgba(255, 255, 255, 0.95);
+        .blue .icon-wrapper { background: rgba(14, 165, 233, 0.1); }
+        .red .icon-wrapper { background: rgba(239, 68, 68, 0.1); }
+        .green .icon-wrapper { background: rgba(16, 185, 129, 0.1); }
+
+        .icon-wrapper svg {
+            width: 35px;
+            height: 35px;
             fill: none;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
         }
 
-        .card:hover .icon svg {
-            transform: scale(1.15) translateY(-5px);
-            stroke: #fff;
+        .blue .icon-wrapper svg { stroke: #38bdf8; }
+        .red .icon-wrapper svg { stroke: #f87171; }
+        .green .icon-wrapper svg { stroke: #34d399; }
+
+        .card:hover .icon-wrapper {
+            transform: scale(1.1);
         }
 
         .card h3 {
             font-size: 1.25rem;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-weight: 700;
+            color: #f1f5f9;
         }
 
         .card p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            margin-bottom: 35px;
         }
 
+        /* Botões */
         .card button {
             width: 100%;
-            padding: 15px;
-            border-radius: 30px;
+            padding: 14px;
+            border-radius: 12px;
             border: none;
-            font-weight: 800;
-            letter-spacing: 1px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
             cursor: pointer;
             color: white;
             pointer-events: none;
             margin-top: auto; 
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            filter: brightness(1.1);
+            transition: all 0.3s ease;
         }
 
-        .blue button { background: linear-gradient(135deg, #00b4d8, #0077b6); }
-        .red button { background: linear-gradient(135deg, #e85d04, #dc2f02); }
-        .green button { background: linear-gradient(135deg, #00b45d, #008f4c); }
+        .blue button { background: #0284c7; }
+        .red button { background: #dc2626; }
+        .green button { background: #059669; }
 
         .card:hover button {
-            transform: translateY(-4px);
-            letter-spacing: 2px;
-            filter: brightness(1.2);
+            filter: brightness(1.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         /* =========================================
-           FOOTER COM ASSINATURA DO JUNIOR
+           RODAPÉ (FOOTER)
            ========================================= */
         footer {
             text-align: center;
-            padding: 25px 20px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
+            padding: 30px 20px;
+            background: rgba(15, 23, 42, 0.8);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             margin-top: auto;
         }
 
         .footer-rights {
-            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 10px;
         }
 
-        /* Estilo da Assinatura */
         .dev-signature {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 0.5px;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         .dev-signature span {
-            color: #00e5ff; /* Azul Neon para destacar o nome */
+            color: #38bdf8;
             font-weight: 700;
-            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
         }
 
         .dev-signature i {
-            color: #ff3d00; /* Coração vermelho para dar aquele toque de dedicação */
+            color: #ef4444; /* Coração vermelho */
             font-style: normal;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         /* =========================================
-           ORGANIZAÇÃO PARA CELULARES
+           RESPONSIVIDADE (MOBILE)
            ========================================= */
-        @media (max-width: 768px) {
+        @media (max-width: 850px) {
             header {
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 15px;
                 padding: 20px;
-                margin: 15px;
+                border-radius: 16px;
             }
-            .logo-left, .logo-right { width: 70px; }
-            header h1 { font-size: 1.15rem; order: 3; width: 100%; margin-top: 5px; }
-            h2 { font-size: 1rem; margin-bottom: 20px; }
-            .banner { padding: 12px 25px; margin-bottom: 40px; }
-            .banner img { width: 120px; }
-            .cards { padding: 0 15px; gap: 25px; }
-            .card { padding: 35px 20px 25px; }
-            .icon svg { width: 60px; height: 60px; }
+            .logo-left, .logo-right { width: 90px; }
+            header h1 { font-size: 1.1rem; order: 3; width: 100%; margin-top: 10px; }
+            h2 { font-size: 1rem; margin-bottom: 25px; }
+            .banner img { width: 130px; }
+            .cards { gap: 20px; }
+            .card { padding: 30px 20px; }
+            .icon-wrapper { width: 70px; height: 70px; margin-bottom: 20px; }
+            .icon-wrapper svg { width: 30px; height: 30px; }
             .card h3 { font-size: 1.15rem; }
-            .card p { font-size: 0.85rem; margin-bottom: 25px; }
-            .card button { padding: 14px; font-size: 0.9rem;}
+            .card p { font-size: 0.9rem; margin-bottom: 25px; }
         }
 
-        @media (max-width: 380px) {
-            header h1 { font-size: 1rem; }
+        @media (max-width: 400px) {
+            header h1 { font-size: 0.95rem; }
             .cards { grid-template-columns: 1fr; } 
         }
     </style>
@@ -354,8 +381,8 @@
             
             <a href="https://sistema-csiprc-2026.vercel.app/" target="_blank" class="card blue">
                 <div class="card-content">
-                    <div class="icon">
-                        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path>
                             <path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path>
                             <path d="M8 10h8m-8 4h6"></path>
@@ -369,8 +396,8 @@
 
             <a href="https://relatorio-seguranca-timon.vercel.app/" target="_blank" class="card red">
                 <div class="card-content">
-                    <div class="icon">
-                        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                             <path d="M9 10.5l2 2 4-4"></path>
                         </svg>
@@ -383,8 +410,8 @@
 
             <a href="https://gestao-viagens-csiprc.vercel.app/" target="_blank" class="card green">
                 <div class="card-content">
-                    <div class="icon">
-                        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path>
                         </svg>
                     </div>
@@ -399,7 +426,7 @@
 
     <footer>
         <p class="footer-rights">© 2026 FUNAC / CSIPRC. Região dos Cocais. Todos os direitos reservados.</p>
-        <p class="dev-signature">Desenvolvido com por <span>Junior</span> (Socioeducador)</p>
+        <p class="dev-signature">Desenvolvido com <i>❤️</i> por <span>Junior</span> (Socioeducador)</p>
     </footer>
 
 </body>
