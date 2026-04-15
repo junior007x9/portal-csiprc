@@ -24,27 +24,77 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            background-color: #0f172a; /* Tom escuro elegante */
+            background-color: #0b1120; /* Fundo ainda mais profundo e premium */
         }
 
-        /* Fundo com luzes suaves */
-        .bg {
+        /* =========================================
+           LOADER (TELA DE CARREGAMENTO)
+           ========================================= */
+        #loader {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #0b1120;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #loader p {
+            color: #94a3b8;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* =========================================
+           FUNDO ANIMADO PREMIUM
+           ========================================= */
+        .bg-glow {
             position: fixed;
             width: 100vw;
             height: 100vh;
             top: 0;
             left: 0;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(2, 132, 199, 0.15), transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(220, 38, 38, 0.12), transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.12), transparent 50%);
-            animation: pulseAura 15s infinite alternate ease-in-out;
+            overflow: hidden;
         }
 
-        @keyframes pulseAura {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.1); opacity: 1; }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 { width: 400px; height: 400px; background: #0284c7; top: -10%; left: -10%; }
+        .orb-2 { width: 500px; height: 500px; background: #9333ea; bottom: -20%; right: -10%; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: #059669; top: 40%; left: 40%; animation-delay: -10s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
         }
 
         /* =========================================
@@ -59,36 +109,40 @@
             width: 95%;
             max-width: 1400px;
             border-radius: 20px;
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeDown 0.8s ease-out;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeDown 1s ease-out 0.5s forwards;
         }
 
         @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .logo-left, .logo-right {
             width: 120px;
             object-fit: contain;
-            transition: transform 0.4s ease;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)) grayscale(20%);
         }
 
         .logo-left:hover, .logo-right:hover {
             transform: scale(1.08);
+            filter: drop-shadow(0 8px 12px rgba(255,255,255,0.1)) grayscale(0%);
         }
 
         header h1 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 800;
             text-align: center;
-            letter-spacing: 1px;
-            color: #ffffff;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             flex: 1;
             padding: 0 20px;
         }
@@ -101,7 +155,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
             width: 100%;
         }
 
@@ -109,13 +163,13 @@
             margin-top: 20px;
             margin-bottom: 30px;
             font-size: 1.2rem;
-            font-weight: 500;
-            letter-spacing: 3px;
+            font-weight: 600;
+            letter-spacing: 4px;
             color: #94a3b8;
             text-transform: uppercase;
             text-align: center;
-            padding: 0 15px;
-            animation: fadeIn 1s ease-out 0.3s both;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.8s forwards;
         }
 
         .banner {
@@ -125,34 +179,35 @@
             padding: 10px;
             border-radius: 16px;
             margin-bottom: 50px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            animation: fadeIn 1s ease-out 0.5s both;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
         }
 
         .banner:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(255, 214, 0, 0.15);
-            border-color: rgba(255, 214, 0, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 214, 0, 0.2);
+            border-color: rgba(255, 214, 0, 0.4);
         }
 
-        .banner img { 
-            width: 160px; 
-            border-radius: 8px;
-        }
+        .banner img { width: 160px; border-radius: 8px; }
+
+        @keyframes fadeIn { to { opacity: 1; } }
 
         /* =========================================
-           CARTÕES (CARDS)
+           CARTÕES (GRID E ESTILOS)
            ========================================= */
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1300px;
             padding: 0 25px;
+            perspective: 1000px; /* Para o efeito 3D */
         }
 
         .card {
@@ -160,34 +215,31 @@
             flex-direction: column;
             padding: 40px 30px;
             border-radius: 24px;
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            cursor: pointer;
             text-decoration: none;
             color: white;
             text-align: center;
             position: relative;
             overflow: hidden;
-            
             opacity: 0;
+            transform-style: preserve-3d; /* Para o efeito 3D */
+            transition: background 0.4s, border 0.4s, box-shadow 0.4s;
             animation: fadeUp 0.8s forwards ease-out;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .card:nth-child(1) { animation-delay: 0.6s; }
-        .card:nth-child(2) { animation-delay: 0.8s; }
-        .card:nth-child(3) { animation-delay: 1.0s; }
+        /* Animação de entrada em cascata */
+        .card:nth-child(1) { animation-delay: 1.1s; }
+        .card:nth-child(2) { animation-delay: 1.2s; }
+        .card:nth-child(3) { animation-delay: 1.3s; }
+        .card:nth-child(4) { animation-delay: 1.4s; }
+        .card:nth-child(5) { animation-delay: 1.5s; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .card::before {
@@ -197,133 +249,115 @@
             transition: all 0.4s ease;
         }
 
-        /* Cores específicas de cada cartão */
+        /* Cores Premium dos Cartões */
         .blue::before { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
         .red::before { background: linear-gradient(90deg, #ef4444, #f87171); }
         .green::before { background: linear-gradient(90deg, #10b981, #34d399); }
+        .purple::before { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
+        .orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
 
         .card:hover {
-            transform: translateY(-10px);
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(255, 255, 255, 0.15);
+            z-index: 10;
         }
 
-        .blue:hover { box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15); }
-        .red:hover { box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15); }
-        .green:hover { box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15); }
+        .blue:hover { box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2); }
+        .red:hover { box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2); }
+        .green:hover { box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2); }
+        .purple:hover { box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2); }
+        .orange:hover { box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2); }
 
         /* =========================================
-           ÍCONES E TEXTOS DOS CARTÕES
+           ÍCONES E TEXTOS
            ========================================= */
         .card-content {
             flex-grow: 1; 
             display: flex;
             flex-direction: column;
             align-items: center;
+            transform: translateZ(30px); /* Efeito 3D de saltar para fora */
         }
 
         .icon-wrapper {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: flex; justify-content: center; align-items: center;
             margin-bottom: 25px;
-            transition: transform 0.5s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 0 rgba(0,0,0,0);
         }
 
         .blue .icon-wrapper { background: rgba(14, 165, 233, 0.1); }
         .red .icon-wrapper { background: rgba(239, 68, 68, 0.1); }
         .green .icon-wrapper { background: rgba(16, 185, 129, 0.1); }
+        .purple .icon-wrapper { background: rgba(139, 92, 246, 0.1); }
+        .orange .icon-wrapper { background: rgba(245, 158, 11, 0.1); }
 
-        .icon-wrapper svg {
-            width: 35px;
-            height: 35px;
-            fill: none;
-            transition: all 0.3s ease;
-        }
+        .icon-wrapper svg { width: 35px; height: 35px; fill: none; transition: all 0.3s ease; }
 
         .blue .icon-wrapper svg { stroke: #38bdf8; }
         .red .icon-wrapper svg { stroke: #f87171; }
         .green .icon-wrapper svg { stroke: #34d399; }
+        .purple .icon-wrapper svg { stroke: #c084fc; }
+        .orange .icon-wrapper svg { stroke: #fbbf24; }
 
         .card:hover .icon-wrapper {
-            transform: scale(1.1);
+            transform: scale(1.15) translateZ(20px);
         }
+        
+        .blue:hover .icon-wrapper { box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+        .red:hover .icon-wrapper { box-shadow: 0 0 20px rgba(248, 113, 113, 0.5); }
+        .green:hover .icon-wrapper { box-shadow: 0 0 20px rgba(52, 211, 153, 0.5); }
+        .purple:hover .icon-wrapper { box-shadow: 0 0 20px rgba(192, 132, 252, 0.5); }
+        .orange:hover .icon-wrapper { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
 
         .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-            color: #f1f5f9;
+            font-size: 1.25rem; margin-bottom: 15px; font-weight: 700; color: #f1f5f9;
         }
 
         .card p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #cbd5e1;
-            margin-bottom: 35px;
+            font-size: 0.95rem; line-height: 1.6; color: #94a3b8; margin-bottom: 35px;
         }
 
         /* Botões */
         .card button {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            color: white;
-            pointer-events: none;
-            margin-top: auto; 
-            transition: all 0.3s ease;
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;
+            cursor: pointer; color: white; pointer-events: none;
+            margin-top: auto; transition: all 0.4s ease;
+            transform: translateZ(20px); /* 3D effect */
         }
 
-        .blue button { background: #0284c7; }
-        .red button { background: #dc2626; }
-        .green button { background: #059669; }
+        .blue button { background: linear-gradient(135deg, #0284c7, #0ea5e9); }
+        .red button { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+        .green button { background: linear-gradient(135deg, #047857, #10b981); }
+        .purple button { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+        .orange button { background: linear-gradient(135deg, #b45309, #f59e0b); }
 
         .card:hover button {
-            filter: brightness(1.15);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            filter: brightness(1.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: translateZ(30px) scale(1.02);
         }
 
         /* =========================================
            RODAPÉ (FOOTER)
            ========================================= */
         footer {
-            text-align: center;
-            padding: 30px 20px;
+            text-align: center; padding: 30px 20px;
             background: rgba(15, 23, 42, 0.8);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             margin-top: auto;
+            backdrop-filter: blur(10px);
         }
 
-        .footer-rights {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-bottom: 10px;
-        }
-
-        .dev-signature {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            font-weight: 500;
-        }
-
-        .dev-signature span {
-            color: #38bdf8;
-            font-weight: 700;
-        }
-
+        .footer-rights { font-size: 0.85rem; color: #64748b; margin-bottom: 10px; }
+        .dev-signature { font-size: 0.9rem; color: #94a3b8; font-weight: 500; }
+        .dev-signature span { color: #38bdf8; font-weight: 700; }
         .dev-signature i {
-            color: #ef4444; /* Coração vermelho */
-            font-style: normal;
+            color: #ef4444; font-style: normal; display: inline-block;
             animation: heartbeat 1.5s infinite;
-            display: inline-block;
         }
 
         @keyframes heartbeat {
@@ -335,34 +369,26 @@
            RESPONSIVIDADE (MOBILE)
            ========================================= */
         @media (max-width: 850px) {
-            header {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-                padding: 20px;
-                border-radius: 16px;
-            }
+            header { flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
             .logo-left, .logo-right { width: 90px; }
             header h1 { font-size: 1.1rem; order: 3; width: 100%; margin-top: 10px; }
-            h2 { font-size: 1rem; margin-bottom: 25px; }
             .banner img { width: 130px; }
-            .cards { gap: 20px; }
-            .card { padding: 30px 20px; }
-            .icon-wrapper { width: 70px; height: 70px; margin-bottom: 20px; }
-            .icon-wrapper svg { width: 30px; height: 30px; }
-            .card h3 { font-size: 1.15rem; }
-            .card p { font-size: 0.9rem; margin-bottom: 25px; }
-        }
-
-        @media (max-width: 400px) {
-            header h1 { font-size: 0.95rem; }
-            .cards { grid-template-columns: 1fr; } 
+            .card { padding: 30px 20px; transform: none !important; } /* Desativa 3D no mobile */
         }
     </style>
 </head>
 <body>
 
-    <div class="bg"></div>
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Iniciando Sistemas...</p>
+    </div>
+
+    <div class="bg-glow">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <header>
         <img src="assets/logo-maranhao.png" alt="Governo do Maranhão" class="logo-left">
@@ -416,7 +442,37 @@
                         </svg>
                     </div>
                     <h3>GESTÃO DE DIÁRIAS</h3>
-                    <p>Frota, Solicitações e Contas</p>
+                    <p>Frota, Solicitações de Viagens e Contas</p>
+                </div>
+                <button>ACESSAR SISTEMA</button>
+            </a>
+
+            <a href="https://transparencia-csiprc.vercel.app/" target="_blank" class="card purple">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>TRANSPARÊNCIA</h3>
+                    <p>Controle de Viagens dos Servidores e Prestação de Contas</p>
+                </div>
+                <button>ACESSAR SISTEMA</button>
+            </a>
+
+            <a href="https://relatorio-equipe-tecnica-psi.vercel.app/" target="_blank" class="card orange">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>EQUIPE TÉCNICA</h3>
+                    <p>Registros, Psicologia e Auxílio em Atendimentos</p>
                 </div>
                 <button>ACESSAR SISTEMA</button>
             </a>
@@ -429,5 +485,43 @@
         <p class="dev-signature">Desenvolvido com <i>❤️</i> por <span>Junior</span> (Socioeducador)</p>
     </footer>
 
+    <script>
+        // Remover Loader após carregar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.visibility = 'hidden'; }, 800);
+            }, 800); // Exibe o loader por quase 1 segundo para dar charme
+        });
+
+        // Efeito 3D (Tilt) nos Cartões (Apenas para Desktop)
+        const cards = document.querySelectorAll('.card');
+        
+        // Verifica se não é touch device
+        if (window.matchMedia("(pointer: fine)").matches) {
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // Posição X dentro do card
+                    const y = e.clientY - rect.top;  // Posição Y dentro do card
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Calcula a rotação (máximo de 10 graus)
+                    const rotateX = ((y - centerY) / centerY) * -10; 
+                    const rotateY = ((x - centerX) / centerX) * 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+                });
+
+                // Reseta a rotação quando o mouse sai
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)`;
+                });
+            });
+        }
+    </script>
 </body>
 </html>
