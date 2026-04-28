@@ -172,6 +172,10 @@
             animation: fadeIn 1s ease-out 0.8s forwards;
         }
 
+        .section-dev {
+            margin-top: 60px; /* Separação visual para a área de desenvolvimento */
+        }
+
         .banner {
             display: inline-flex;
             justify-content: center;
@@ -255,6 +259,7 @@
         .green::before { background: linear-gradient(90deg, #10b981, #34d399); }
         .purple::before { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
         .orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .grey::before { background: linear-gradient(90deg, #64748b, #94a3b8); } /* Cor para os em dev */
 
         .card:hover {
             background: rgba(30, 41, 59, 0.8);
@@ -267,6 +272,17 @@
         .green:hover { box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2); }
         .purple:hover { box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2); }
         .orange:hover { box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2); }
+
+        /* Estilo para Cartões em Desenvolvimento */
+        .card.dev-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(255, 255, 255, 0.02);
+            cursor: not-allowed;
+        }
+        .card.dev-card:hover {
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
 
         /* =========================================
            ÍCONES E TEXTOS
@@ -293,6 +309,7 @@
         .green .icon-wrapper { background: rgba(16, 185, 129, 0.1); }
         .purple .icon-wrapper { background: rgba(139, 92, 246, 0.1); }
         .orange .icon-wrapper { background: rgba(245, 158, 11, 0.1); }
+        .dev-card .icon-wrapper { background: rgba(100, 116, 139, 0.1); } /* Fundo icone cinza */
 
         .icon-wrapper svg { width: 35px; height: 35px; fill: none; transition: all 0.3s ease; }
 
@@ -301,6 +318,7 @@
         .green .icon-wrapper svg { stroke: #34d399; }
         .purple .icon-wrapper svg { stroke: #c084fc; }
         .orange .icon-wrapper svg { stroke: #fbbf24; }
+        .dev-card .icon-wrapper svg { stroke: #64748b; }
 
         .card:hover .icon-wrapper {
             transform: scale(1.15) translateZ(20px);
@@ -311,14 +329,19 @@
         .green:hover .icon-wrapper { box-shadow: 0 0 20px rgba(52, 211, 153, 0.5); }
         .purple:hover .icon-wrapper { box-shadow: 0 0 20px rgba(192, 132, 252, 0.5); }
         .orange:hover .icon-wrapper { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+        .dev-card:hover .icon-wrapper { box-shadow: 0 0 20px rgba(100, 116, 139, 0.3); }
 
         .card h3 {
             font-size: 1.25rem; margin-bottom: 15px; font-weight: 700; color: #f1f5f9;
         }
 
+        .dev-card h3 { color: #cbd5e1; }
+
         .card p {
             font-size: 0.95rem; line-height: 1.6; color: #94a3b8; margin-bottom: 35px;
         }
+
+        .dev-card p { color: #64748b; }
 
         /* Botões */
         .card button {
@@ -335,10 +358,23 @@
         .purple button { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
         .orange button { background: linear-gradient(135deg, #b45309, #f59e0b); }
 
+        /* Botão dos cards em desenvolvimento */
+        .dev-card button { 
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px dashed #475569;
+            color: #94a3b8;
+        }
+
         .card:hover button {
             filter: brightness(1.2);
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
             transform: translateZ(30px) scale(1.02);
+        }
+
+        .dev-card:hover button {
+            filter: brightness(1);
+            box-shadow: none;
+            transform: translateZ(20px) scale(1);
         }
 
         /* =========================================
@@ -405,21 +441,6 @@
 
         <div class="cards">
             
-            <a href="https://sistema-csiprc-2026.vercel.app/" target="_blank" class="card blue">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path>
-                            <path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path>
-                            <path d="M8 10h8m-8 4h6"></path>
-                        </svg>
-                    </div>
-                    <h3>RELATÓRIOS DO CENTRO</h3>
-                    <p>Administração, Educação e Gestão Geral</p>
-                </div>
-                <button>ACESSAR SISTEMA</button>
-            </a>
-
             <a href="https://relatorio-seguranca-timon.vercel.app/" target="_blank" class="card red">
                 <div class="card-content">
                     <div class="icon-wrapper">
@@ -461,7 +482,28 @@
                 <button>ACESSAR SISTEMA</button>
             </a>
 
-            <a href="https://relatorio-equipe-tecnica-psi.vercel.app/" target="_blank" class="card orange">
+        </div>
+
+        <h2 class="section-dev">EM DESENVOLVIMENTO</h2>
+
+        <div class="cards">
+
+            <a href="#" class="card grey dev-card" onclick="event.preventDefault();">
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path>
+                            <path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path>
+                            <path d="M8 10h8m-8 4h6"></path>
+                        </svg>
+                    </div>
+                    <h3>RELATÓRIOS DO CENTRO</h3>
+                    <p>Administração, Educação e Gestão Geral</p>
+                </div>
+                <button>EM DESENVOLVIMENTO</button>
+            </a>
+
+            <a href="#" class="card grey dev-card" onclick="event.preventDefault();">
                 <div class="card-content">
                     <div class="icon-wrapper">
                         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -474,10 +516,11 @@
                     <h3>EQUIPE TÉCNICA</h3>
                     <p>Registros, Psicologia e Auxílio em Atendimentos</p>
                 </div>
-                <button>ACESSAR SISTEMA</button>
+                <button>EM DESENVOLVIMENTO</button>
             </a>
 
         </div>
+
     </main>
 
     <footer>
