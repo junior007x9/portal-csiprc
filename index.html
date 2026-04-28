@@ -24,11 +24,11 @@
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            background-color: #0b1120; /* Fundo ainda mais profundo e premium */
+            background-color: #0b1120;
         }
 
         /* =========================================
-           LOADER (TELA DE CARREGAMENTO)
+           LOADER
            ========================================= */
         #loader {
             position: fixed;
@@ -68,7 +68,7 @@
         }
 
         /* =========================================
-           FUNDO ANIMADO PREMIUM
+           FUNDO ANIMADO
            ========================================= */
         .bg-glow {
             position: fixed;
@@ -98,7 +98,7 @@
         }
 
         /* =========================================
-           CABEÇALHO (HEADER)
+           CABEÇALHO
            ========================================= */
         header {
             display: flex;
@@ -111,7 +111,6 @@
             border-radius: 20px;
             background: rgba(30, 41, 59, 0.4);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             opacity: 0;
@@ -126,13 +125,7 @@
         .logo-left, .logo-right {
             width: 120px;
             object-fit: contain;
-            transition: transform 0.4s ease, filter 0.4s ease;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4)) grayscale(20%);
-        }
-
-        .logo-left:hover, .logo-right:hover {
-            transform: scale(1.08);
-            filter: drop-shadow(0 8px 12px rgba(255,255,255,0.1)) grayscale(0%);
+            transition: transform 0.4s ease;
         }
 
         header h1 {
@@ -173,7 +166,8 @@
         }
 
         .section-dev {
-            margin-top: 60px; /* Separação visual para a área de desenvolvimento */
+            margin-top: 60px;
+            color: #f59e0b; /* Cor de destaque para indicar alerta/dev */
         }
 
         .banner {
@@ -185,16 +179,8 @@
             margin-bottom: 50px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
             opacity: 0;
             animation: fadeIn 1s ease-out 1s forwards;
-        }
-
-        .banner:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(255, 214, 0, 0.2);
-            border-color: rgba(255, 214, 0, 0.4);
         }
 
         .banner img { width: 160px; border-radius: 8px; }
@@ -202,7 +188,7 @@
         @keyframes fadeIn { to { opacity: 1; } }
 
         /* =========================================
-           CARTÕES (GRID E ESTILOS)
+           GRID DE CARTÕES
            ========================================= */
         .cards {
             display: grid;
@@ -211,7 +197,6 @@
             width: 100%;
             max-width: 1300px;
             padding: 0 25px;
-            perspective: 1000px; /* Para o efeito 3D */
         }
 
         .card {
@@ -221,7 +206,6 @@
             border-radius: 24px;
             background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             text-decoration: none;
             color: white;
@@ -229,17 +213,9 @@
             position: relative;
             overflow: hidden;
             opacity: 0;
-            transform-style: preserve-3d; /* Para o efeito 3D */
-            transition: background 0.4s, border 0.4s, box-shadow 0.4s;
+            transition: all 0.4s ease;
             animation: fadeUp 0.8s forwards ease-out;
         }
-
-        /* Animação de entrada em cascata */
-        .card:nth-child(1) { animation-delay: 1.1s; }
-        .card:nth-child(2) { animation-delay: 1.2s; }
-        .card:nth-child(3) { animation-delay: 1.3s; }
-        .card:nth-child(4) { animation-delay: 1.4s; }
-        .card:nth-child(5) { animation-delay: 1.5s; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(40px); }
@@ -250,21 +226,18 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 4px;
-            transition: all 0.4s ease;
         }
 
-        /* Cores Premium dos Cartões */
         .blue::before { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
         .red::before { background: linear-gradient(90deg, #ef4444, #f87171); }
         .green::before { background: linear-gradient(90deg, #10b981, #34d399); }
         .purple::before { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
         .orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-        .grey::before { background: linear-gradient(90deg, #64748b, #94a3b8); } /* Cor para os em dev */
 
         .card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(255, 255, 255, 0.15);
-            z-index: 10;
+            transform: translateY(-10px);
         }
 
         .blue:hover { box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2); }
@@ -273,35 +246,12 @@
         .purple:hover { box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2); }
         .orange:hover { box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2); }
 
-        /* Estilo para Cartões em Desenvolvimento */
-        .card.dev-card {
-            background: rgba(15, 23, 42, 0.6);
-            border-color: rgba(255, 255, 255, 0.02);
-            cursor: not-allowed;
-        }
-        .card.dev-card:hover {
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        /* =========================================
-           ÍCONES E TEXTOS
-           ========================================= */
-        .card-content {
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transform: translateZ(30px); /* Efeito 3D de saltar para fora */
-        }
-
         .icon-wrapper {
             width: 80px; height: 80px;
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             margin-bottom: 25px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 0 0 rgba(0,0,0,0);
+            margin-left: auto; margin-right: auto;
         }
 
         .blue .icon-wrapper { background: rgba(14, 165, 233, 0.1); }
@@ -309,47 +259,21 @@
         .green .icon-wrapper { background: rgba(16, 185, 129, 0.1); }
         .purple .icon-wrapper { background: rgba(139, 92, 246, 0.1); }
         .orange .icon-wrapper { background: rgba(245, 158, 11, 0.1); }
-        .dev-card .icon-wrapper { background: rgba(100, 116, 139, 0.1); } /* Fundo icone cinza */
 
-        .icon-wrapper svg { width: 35px; height: 35px; fill: none; transition: all 0.3s ease; }
+        .icon-wrapper svg { width: 35px; height: 35px; fill: none; stroke-width: 2; }
+        .blue svg { stroke: #38bdf8; }
+        .red svg { stroke: #f87171; }
+        .green svg { stroke: #34d399; }
+        .purple svg { stroke: #c084fc; }
+        .orange svg { stroke: #fbbf24; }
 
-        .blue .icon-wrapper svg { stroke: #38bdf8; }
-        .red .icon-wrapper svg { stroke: #f87171; }
-        .green .icon-wrapper svg { stroke: #34d399; }
-        .purple .icon-wrapper svg { stroke: #c084fc; }
-        .orange .icon-wrapper svg { stroke: #fbbf24; }
-        .dev-card .icon-wrapper svg { stroke: #64748b; }
+        .card h3 { font-size: 1.25rem; margin-bottom: 15px; font-weight: 700; }
+        .card p { font-size: 0.95rem; line-height: 1.6; color: #94a3b8; margin-bottom: 35px; }
 
-        .card:hover .icon-wrapper {
-            transform: scale(1.15) translateZ(20px);
-        }
-        
-        .blue:hover .icon-wrapper { box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
-        .red:hover .icon-wrapper { box-shadow: 0 0 20px rgba(248, 113, 113, 0.5); }
-        .green:hover .icon-wrapper { box-shadow: 0 0 20px rgba(52, 211, 153, 0.5); }
-        .purple:hover .icon-wrapper { box-shadow: 0 0 20px rgba(192, 132, 252, 0.5); }
-        .orange:hover .icon-wrapper { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
-        .dev-card:hover .icon-wrapper { box-shadow: 0 0 20px rgba(100, 116, 139, 0.3); }
-
-        .card h3 {
-            font-size: 1.25rem; margin-bottom: 15px; font-weight: 700; color: #f1f5f9;
-        }
-
-        .dev-card h3 { color: #cbd5e1; }
-
-        .card p {
-            font-size: 0.95rem; line-height: 1.6; color: #94a3b8; margin-bottom: 35px;
-        }
-
-        .dev-card p { color: #64748b; }
-
-        /* Botões */
         .card button {
             width: 100%; padding: 15px; border-radius: 12px; border: none;
             font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;
-            cursor: pointer; color: white; pointer-events: none;
-            margin-top: auto; transition: all 0.4s ease;
-            transform: translateZ(20px); /* 3D effect */
+            color: white; margin-top: auto; cursor: pointer;
         }
 
         .blue button { background: linear-gradient(135deg, #0284c7, #0ea5e9); }
@@ -358,59 +282,19 @@
         .purple button { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
         .orange button { background: linear-gradient(135deg, #b45309, #f59e0b); }
 
-        /* Botão dos cards em desenvolvimento */
-        .dev-card button { 
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px dashed #475569;
-            color: #94a3b8;
-        }
-
-        .card:hover button {
-            filter: brightness(1.2);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transform: translateZ(30px) scale(1.02);
-        }
-
-        .dev-card:hover button {
-            filter: brightness(1);
-            box-shadow: none;
-            transform: translateZ(20px) scale(1);
-        }
-
         /* =========================================
-           RODAPÉ (FOOTER)
+           RODAPÉ
            ========================================= */
         footer {
             text-align: center; padding: 30px 20px;
             background: rgba(15, 23, 42, 0.8);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             margin-top: auto;
-            backdrop-filter: blur(10px);
         }
 
         .footer-rights { font-size: 0.85rem; color: #64748b; margin-bottom: 10px; }
-        .dev-signature { font-size: 0.9rem; color: #94a3b8; font-weight: 500; }
+        .dev-signature { font-size: 0.9rem; color: #94a3b8; }
         .dev-signature span { color: #38bdf8; font-weight: 700; }
-        .dev-signature i {
-            color: #ef4444; font-style: normal; display: inline-block;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        /* =========================================
-           RESPONSIVIDADE (MOBILE)
-           ========================================= */
-        @media (max-width: 850px) {
-            header { flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
-            .logo-left, .logo-right { width: 90px; }
-            header h1 { font-size: 1.1rem; order: 3; width: 100%; margin-top: 10px; }
-            .banner img { width: 130px; }
-            .card { padding: 30px 20px; transform: none !important; } /* Desativa 3D no mobile */
-        }
     </style>
 </head>
 <body>
@@ -442,81 +326,71 @@
         <div class="cards">
             
             <a href="https://relatorio-seguranca-timon.vercel.app/" target="_blank" class="card red">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            <path d="M9 10.5l2 2 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3>RELATÓRIOS DE SEGURANÇA</h3>
-                    <p>Ocorrências, Plantões e Monitoramento Operacional</p>
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="M9 10.5l2 2 4-4"></path>
+                    </svg>
                 </div>
+                <h3>RELATÓRIOS DE SEGURANÇA</h3>
+                <p>Ocorrências, Plantões e Monitoramento Operacional</p>
                 <button>ACESSAR SISTEMA</button>
             </a>
 
             <a href="https://gestao-viagens-csiprc.vercel.app/" target="_blank" class="card green">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path>
-                        </svg>
-                    </div>
-                    <h3>GESTÃO DE DIÁRIAS</h3>
-                    <p>Frota, Solicitações de Viagens e Contas</p>
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path>
+                    </svg>
                 </div>
+                <h3>GESTÃO DE DIÁRIAS</h3>
+                <p>Frota, Solicitações de Viagens e Contas</p>
                 <button>ACESSAR SISTEMA</button>
             </a>
 
             <a href="https://transparencia-csiprc.vercel.app/" target="_blank" class="card purple">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                    </div>
-                    <h3>TRANSPARÊNCIA</h3>
-                    <p>Controle de Viagens dos Servidores e Prestação de Contas</p>
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
                 </div>
+                <h3>TRANSPARÊNCIA</h3>
+                <p>Controle de Viagens dos Servidores e Prestação de Contas</p>
                 <button>ACESSAR SISTEMA</button>
             </a>
 
         </div>
 
-        <h2 class="section-dev">EM DESENVOLVIMENTO</h2>
+        <h2 class="section-dev">EM DESENVOLVIMENTO (PRÉVIA)</h2>
 
         <div class="cards">
 
-            <a href="#" class="card grey dev-card" onclick="event.preventDefault();">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path>
-                            <path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path>
-                            <path d="M8 10h8m-8 4h6"></path>
-                        </svg>
-                    </div>
-                    <h3>RELATÓRIOS DO CENTRO</h3>
-                    <p>Administração, Educação e Gestão Geral</p>
+            <a href="https://sistema-csiprc-2026.vercel.app/" target="_blank" class="card blue">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path>
+                        <path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path>
+                        <path d="M8 10h8m-8 4h6"></path>
+                    </svg>
                 </div>
-                <button>EM DESENVOLVIMENTO</button>
+                <h3>RELATÓRIOS DO CENTRO</h3>
+                <p>Administração, Educação e Gestão Geral</p>
+                <button>ACESSAR BETA</button>
             </a>
 
-            <a href="#" class="card grey dev-card" onclick="event.preventDefault();">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <h3>EQUIPE TÉCNICA</h3>
-                    <p>Registros, Psicologia e Auxílio em Atendimentos</p>
+            <a href="https://relatorio-equipe-tecnica-psi.vercel.app/" target="_blank" class="card orange">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
                 </div>
-                <button>EM DESENVOLVIMENTO</button>
+                <h3>EQUIPE TÉCNICA</h3>
+                <p>Registros, Psicologia e Auxílio em Atendimentos</p>
+                <button>ACESSAR BETA</button>
             </a>
 
         </div>
@@ -525,46 +399,17 @@
 
     <footer>
         <p class="footer-rights">© 2026 FUNAC / CSIPRC. Região dos Cocais. Todos os direitos reservados.</p>
-        <p class="dev-signature">Desenvolvido<i></i> por <span>Junior</span> (Socioeducador)</p>
+        <p class="dev-signature">Desenvolvido com ❤️ por <span>Junior</span> (Socioeducador)</p>
     </footer>
 
     <script>
-        // Remover Loader após carregar
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.visibility = 'hidden'; }, 800);
-            }, 800); // Exibe o loader por quase 1 segundo para dar charme
+            }, 800);
         });
-
-        // Efeito 3D (Tilt) nos Cartões (Apenas para Desktop)
-        const cards = document.querySelectorAll('.card');
-        
-        // Verifica se não é touch device
-        if (window.matchMedia("(pointer: fine)").matches) {
-            cards.forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left; // Posição X dentro do card
-                    const y = e.clientY - rect.top;  // Posição Y dentro do card
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    // Calcula a rotação (máximo de 10 graus)
-                    const rotateX = ((y - centerY) / centerY) * -10; 
-                    const rotateY = ((x - centerX) / centerX) * 10;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
-                });
-
-                // Reseta a rotação quando o mouse sai
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)`;
-                });
-            });
-        }
     </script>
 </body>
 </html>
