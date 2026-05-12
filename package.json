@@ -1,0 +1,12 @@
+{
+  "name": "portal-csiprc",
+  "version": "1.0.0",
+  "description": "Portal de Acesso CSIPRC",
+  "main": "index.html",
+  "scripts": {
+    "start": "node api/login.js"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.6.0"
+  }
+}
