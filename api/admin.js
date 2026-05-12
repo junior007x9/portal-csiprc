@@ -11,29 +11,86 @@
         /* =========================================
            RESET E BASE
            ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-        body { min-height: 100vh; color: #f8fafc; overflow-x: hidden; display: flex; flex-direction: column; background-color: #0b1120; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: #f8fafc;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #0b1120;
+        }
 
         /* =========================================
            LOADER
            ========================================= */
-        #loader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0b1120; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s; }
-        .spinner { width: 50px; height: 50px; border: 4px solid rgba(255, 255, 255, 0.1); border-left-color: #38bdf8; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        #loader {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #0b1120;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        #loader p { color: #94a3b8; letter-spacing: 3px; font-size: 0.9rem; text-transform: uppercase; animation: pulseText 1.5s infinite; }
-        @keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        #loader p {
+            color: #94a3b8;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
 
         /* =========================================
            TELA DE LOGIN
            ========================================= */
-        #login-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: transparent; z-index: 9000; display: flex; justify-content: center; align-items: center; }
-        .login-box { background: rgba(30, 41, 59, 0.8); padding: 40px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1); width: 90%; max-width: 400px; text-align: center; backdrop-filter: blur(20px); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        #login-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: transparent; z-index: 9000; display: flex; justify-content: center; align-items: center;
+        }
+        .login-box {
+            background: rgba(30, 41, 59, 0.8); padding: 40px; border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1); width: 90%; max-width: 400px; text-align: center;
+            backdrop-filter: blur(20px); box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
         .login-box img { width: 140px; margin-bottom: 20px; }
         .login-box h3 { font-size: 1.5rem; margin-bottom: 5px; color: white; }
         .login-box p { font-size: 0.85rem; color: #94a3b8; margin-bottom: 25px; }
-        .login-box input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; text-align: center; border: 1px solid #334155; background: #1e293b; color: white; outline: none; font-size: 1rem; }
+        .login-box input {
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; text-align: center;
+            border: 1px solid #334155; background: #1e293b; color: white; outline: none; font-size: 1rem;
+        }
         .login-box input:focus { border-color: #38bdf8; }
-        .login-box button { width: 100%; padding: 15px; background: linear-gradient(135deg, #0284c7, #38bdf8); border: none; border-radius: 12px; color: white; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .login-box button {
+            width: 100%; padding: 15px; background: linear-gradient(135deg, #0284c7, #38bdf8);
+            border: none; border-radius: 12px; color: white; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s;
+        }
         .login-box button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(2, 132, 199, 0.3); }
         .login-box button:disabled { background: #475569; cursor: not-allowed; transform: none; box-shadow: none; }
         #error-msg { color: #ef4444; font-size: 0.85rem; margin-top: 15px; display: none; font-weight: 600; }
@@ -41,77 +98,228 @@
         /* =========================================
            PORTAL PRINCIPAL (OCULTO ATÉ LOGIN)
            ========================================= */
-        #main-portal { display: none; flex: 1; flex-direction: column; width: 100%; }
+        #main-portal {
+            display: none; flex: 1; flex-direction: column; width: 100%;
+        }
 
         /* =========================================
            FUNDO ANIMADO
            ========================================= */
-        .bg-glow { position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; z-index: -1; overflow: hidden; }
-        .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: floatOrb 20s infinite alternate ease-in-out; }
+        .bg-glow {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0; left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatOrb 20s infinite alternate ease-in-out;
+        }
+
         .orb-1 { width: 400px; height: 400px; background: #0284c7; top: -10%; left: -10%; }
         .orb-2 { width: 500px; height: 500px; background: #9333ea; bottom: -20%; right: -10%; animation-delay: -5s; }
         .orb-3 { width: 300px; height: 300px; background: #059669; top: 40%; left: 40%; animation-delay: -10s; }
-        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(100px, 100px) scale(1.2); } }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
+        }
 
         /* =========================================
            CABEÇALHO E BOTÕES ESPECIAIS
            ========================================= */
-        header { display: flex; align-items: center; justify-content: space-between; padding: 15px 40px; margin: 25px auto; width: 95%; max-width: 1400px; border-radius: 20px; background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); opacity: 0; transform: translateY(-20px); animation: fadeDown 1s ease-out 0.5s forwards; }
-        @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } }
-        .logo-left, .logo-right { width: 100px; object-fit: contain; transition: transform 0.4s ease; }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            margin: 25px auto;
+            width: 95%;
+            max-width: 1400px;
+            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeDown 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-left, .logo-right {
+            width: 100px; 
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
         .header-center { flex: 1; text-align: center; }
-        header h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(90deg, #fff, #cbd5e1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
-        .user-badge { display: inline-block; background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.3); }
-        .btn-sair { background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+
+        header h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .user-badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-sair {
+            background: transparent;
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
         .btn-sair:hover { background: #ef4444; color: white; }
-        .btn-admin { background: #f59e0b; color: #000; border: none; padding: 6px 15px; border-radius: 8px; font-weight: bold; font-size: 0.8rem; cursor: pointer; display: none; transition: 0.3s; margin-top: 10px; }
+
+        /* Botão do Admin no Header */
+        .btn-admin {
+            background: #f59e0b;
+            color: #000;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: none; /* Só aparece para Gestão */
+            transition: 0.3s;
+            margin-top: 10px;
+        }
         .btn-admin:hover { background: #d97706; color: white; }
 
         /* =========================================
            PAINEL DE ADMINISTRAÇÃO (UI)
            ========================================= */
-        #admin-panel-ui { display: none; background: rgba(15, 23, 42, 0.95); padding: 40px; border-radius: 24px; margin: 0 auto 40px; width: 95%; max-width: 1200px; border: 1px solid #f59e0b; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; z-index: 10; }
+        #admin-panel-ui {
+            display: none;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 40px;
+            border-radius: 24px;
+            margin: 0 auto 40px;
+            width: 95%;
+            max-width: 1200px;
+            border: 1px solid #f59e0b;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 10;
+        }
+
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; color: white; font-size: 0.9rem; }
         .admin-table th { background: rgba(255,255,255,0.05); padding: 15px; text-align: left; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; color: #94a3b8; }
         .admin-table td { padding: 15px; border-bottom: 1px solid #334155; }
         .admin-table tr:hover { background: rgba(255,255,255,0.02); }
-        .form-cadastro { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; }
-        .form-cadastro input, .form-cadastro select { padding: 12px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; outline: none; font-size: 0.9rem; }
+
+        .form-cadastro {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;
+            margin-bottom: 30px; background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155;
+        }
+        .form-cadastro input, .form-cadastro select {
+            padding: 12px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; outline: none; font-size: 0.9rem;
+        }
         .form-cadastro input:focus, .form-cadastro select:focus { border-color: #f59e0b; }
         .btn-cadastrar { background: #10b981; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; padding: 12px; transition: 0.3s; }
         .btn-cadastrar:hover { background: #059669; }
+
         .btn-excluir { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; transition: 0.3s; }
         .btn-excluir:hover { background: #dc2626; }
 
         /* =========================================
            CONTEÚDO PRINCIPAL (CARTÕES)
            ========================================= */
-        #main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; width: 100%; }
-        h2 { margin-top: 20px; margin-bottom: 30px; font-size: 1.2rem; font-weight: 600; letter-spacing: 4px; color: #94a3b8; text-transform: uppercase; text-align: center; opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards; }
+        #main-content {
+            flex: 1; display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; width: 100%;
+        }
+
+        h2 {
+            margin-top: 20px; margin-bottom: 30px; font-size: 1.2rem; font-weight: 600;
+            letter-spacing: 4px; color: #94a3b8; text-transform: uppercase; text-align: center;
+            opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards;
+        }
+
         .section-dev { margin-top: 60px; color: #f59e0b; }
-        .banner { display: inline-flex; justify-content: center; align-items: center; padding: 10px; border-radius: 16px; margin-bottom: 50px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); opacity: 0; animation: fadeIn 1s ease-out 1s forwards; }
+
+        .banner {
+            display: inline-flex; justify-content: center; align-items: center;
+            padding: 10px; border-radius: 16px; margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0; animation: fadeIn 1s ease-out 1s forwards;
+        }
         .banner img { width: 160px; border-radius: 8px; }
+
         @keyframes fadeIn { to { opacity: 1; } }
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; padding: 0 25px; }
-        .card { display: none; flex-direction: column; padding: 40px 30px; border-radius: 24px; background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); text-decoration: none; color: white; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease; }
+
+        .cards {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px; width: 100%; max-width: 1300px; padding: 0 25px;
+        }
+
+        .card {
+            display: none; /* Oculto por padrão, liberado no JS estritamente pelo perfil */
+            flex-direction: column; padding: 40px 30px; border-radius: 24px;
+            background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05); text-decoration: none; color: white;
+            text-align: center; position: relative; overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
         .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
         .blue::before { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
         .red::before { background: linear-gradient(90deg, #ef4444, #f87171); }
         .green::before { background: linear-gradient(90deg, #10b981, #34d399); }
         .purple::before { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
         .orange::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
         .card:hover { background: rgba(30, 41, 59, 0.8); border-color: rgba(255, 255, 255, 0.15); transform: translateY(-10px); }
-        .icon-wrapper { width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-bottom: 25px; margin-left: auto; margin-right: auto; }
+
+        .icon-wrapper {
+            width: 80px; height: 80px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            margin-bottom: 25px; margin-left: auto; margin-right: auto;
+        }
+
         .blue .icon-wrapper { background: rgba(14, 165, 233, 0.1); }
         .red .icon-wrapper { background: rgba(239, 68, 68, 0.1); }
         .green .icon-wrapper { background: rgba(16, 185, 129, 0.1); }
         .purple .icon-wrapper { background: rgba(139, 92, 246, 0.1); }
         .orange .icon-wrapper { background: rgba(245, 158, 11, 0.1); }
+
         .icon-wrapper svg { width: 35px; height: 35px; fill: none; stroke-width: 2; }
-        .blue svg { stroke: #38bdf8; } .red svg { stroke: #f87171; } .green svg { stroke: #34d399; } .purple svg { stroke: #c084fc; } .orange svg { stroke: #fbbf24; }
+        .blue svg { stroke: #38bdf8; } .red svg { stroke: #f87171; } .green svg { stroke: #34d399; }
+        .purple svg { stroke: #c084fc; } .orange svg { stroke: #fbbf24; }
+
         .card h3 { font-size: 1.25rem; margin-bottom: 15px; font-weight: 700; }
         .card p { font-size: 0.95rem; line-height: 1.6; color: #94a3b8; margin-bottom: 35px; }
-        .card button { width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; color: white; margin-top: auto; cursor: pointer; }
+
+        .card button {
+            width: 100%; padding: 15px; border-radius: 12px; border: none; font-weight: 700;
+            font-size: 0.9rem; letter-spacing: 1px; color: white; margin-top: auto; cursor: pointer;
+        }
+
         .blue button { background: linear-gradient(135deg, #0284c7, #0ea5e9); }
         .red button { background: linear-gradient(135deg, #b91c1c, #ef4444); }
         .green button { background: linear-gradient(135deg, #047857, #10b981); }
@@ -121,7 +329,10 @@
         /* =========================================
            RODAPÉ
            ========================================= */
-        footer { text-align: center; padding: 30px 20px; background: rgba(15, 23, 42, 0.8); border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: auto; }
+        footer {
+            text-align: center; padding: 30px 20px; background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: auto;
+        }
         .footer-rights { font-size: 0.85rem; color: #64748b; margin-bottom: 10px; }
         .dev-signature { font-size: 0.9rem; color: #94a3b8; }
         .dev-signature span { color: #38bdf8; font-weight: 700; }
@@ -215,7 +426,10 @@
                 
                 <a href="https://relatorio-seguranca-timon.vercel.app/" target="_blank" class="card red" data-role="seguranca">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 10.5l2 2 4-4"></path></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M9 10.5l2 2 4-4"></path>
+                        </svg>
                     </div>
                     <h3>RELATÓRIOS DE SEGURANÇA</h3>
                     <p>Ocorrências, Plantões e Monitoramento Operacional</p>
@@ -224,7 +438,9 @@
 
                 <a href="https://gestao-viagens-csiprc.vercel.app/" target="_blank" class="card green" data-role="gestao">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path>
+                        </svg>
                     </div>
                     <h3>GESTÃO DE DIÁRIAS</h3>
                     <p>Frota, Solicitações de Viagens e Contas</p>
@@ -233,7 +449,10 @@
 
                 <a href="https://transparencia-csiprc.vercel.app/" target="_blank" class="card purple" data-role="gestao">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
                     </div>
                     <h3>TRANSPARÊNCIA</h3>
                     <p>Controle de Viagens dos Servidores e Prestação de Contas</p>
@@ -242,7 +461,11 @@
 
                 <a href="https://banco-csiprc.vercel.app" target="_blank" class="card blue" data-role="tecnica">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        </svg>
                     </div>
                     <h3>BANCO DE DADOS</h3>
                     <p>Sistema de banco de dados do CSIPRC</p>
@@ -251,7 +474,13 @@
 
                 <a href="https://painel-gestao-sandy.vercel.app/" target="_blank" class="card blue" data-role="tecnica">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
                     </div>
                     <h3>CONTROLE 45 DIAS</h3>
                     <p>Controle de 45 dias dos adolescentes, relatórios e audiências</p>
@@ -266,7 +495,11 @@
 
                 <a href="https://sistema-csiprc-2026.vercel.app/" target="_blank" class="card blue" data-role="gestao">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path><path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path><path d="M8 10h8m-8 4h6"></path></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path>
+                            <path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path>
+                            <path d="M8 10h8m-8 4h6"></path>
+                        </svg>
                     </div>
                     <h3>RELATÓRIOS DO CENTRO</h3>
                     <p>Administração, Educação e Gestão Geral</p>
@@ -275,7 +508,12 @@
 
                 <a href="https://relatorio-equipe-tecnica-psi.vercel.app/" target="_blank" class="card orange" data-role="tecnica">
                     <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
                     </div>
                     <h3>EQUIPE TÉCNICA</h3>
                     <p>Registros, Psicologia e Auxílio em Atendimentos</p>
@@ -292,26 +530,18 @@
     </div>
 
     <script>
-        let masterPass = "";
+        let masterPass = ""; // Guarda a Senha Mestre na sessão atual
 
-        // Encerramento do loader inicial e VERIFICAÇÃO DE URL (/admin)
+        // Encerramento do loader inicial
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
                 loader.style.opacity = '0';
                 setTimeout(() => { loader.style.visibility = 'hidden'; }, 800);
             }, 800);
-
-            // SE O USUÁRIO DIGITOU /admin NA URL
-            if (window.location.pathname.endsWith('/admin')) {
-                document.getElementById('login-screen').style.display = 'none';
-                setTimeout(validarAcessoAdmin, 500); // Aciona o pop-up de senha mestre imediatamente
-            }
         });
 
-        // ==========================================
         // 1. LOGIN PRINCIPAL DO SERVIDOR
-        // ==========================================
         async function fazerLogin() {
             const numeroAcesso = document.getElementById('numero-acesso').value;
             const password = document.getElementById('password').value;
@@ -349,15 +579,18 @@
             }
         }
 
+        // Aplica a visibilidade baseada no Perfil
         function aplicarPermissoes(user) {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-portal').style.display = 'flex';
             document.getElementById('user-role-name').innerText = `OLÁ, ${user.nome_completo.toUpperCase()} | PERFIL: ${user.role.toUpperCase()}`;
 
+            // Controla a visibilidade do botão ADMIN (Só quem é de Gestão vê)
             if (user.role === 'gestao') {
                 document.getElementById('btn-abrir-admin').style.display = 'inline-block';
             }
 
+            // Exibe estritamente os cartões do perfil do usuário
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 const roleRequired = card.getAttribute('data-role');
@@ -370,7 +603,7 @@
         }
 
         function logout() {
-            window.location.href = '/'; 
+            location.reload(); 
         }
 
         document.getElementById('password').addEventListener('keypress', function (e) {
@@ -378,19 +611,16 @@
         });
 
         // ==========================================
-        // 2. FUNÇÕES DO PAINEL ADMIN
+        // FUNÇÕES DO PAINEL ADMIN (GESTÃO DE EQUIPE)
         // ==========================================
+
         async function validarAcessoAdmin() {
             const senha = prompt("ACESSO RESTRITO\nDigite a SENHA MESTRE da administração:");
-            
-            if (!senha) {
-                // Se a pessoa cancelar o pop-up e estiver na página /admin, recambiamos pra fora
-                if (window.location.pathname.endsWith('/admin')) window.location.href = '/';
-                return;
-            }
+            if (!senha) return;
 
-            masterPass = senha;
+            masterPass = senha; // Salva na memória
 
+            // Chama a API de Admin para listar os servidores
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
@@ -404,24 +634,14 @@
                     exibirPainelAdmin(data.users);
                 } else {
                     alert("Acesso Negado: " + (data.message || "Senha Mestre incorreta!"));
-                    if (window.location.pathname.endsWith('/admin')) window.location.href = '/';
                 }
             } catch (err) {
                 alert("Erro ao conectar ao servidor.");
-                if (window.location.pathname.endsWith('/admin')) window.location.href = '/';
             }
         }
 
         function exibirPainelAdmin(users) {
-            document.getElementById('main-portal').style.display = 'flex';
-            document.getElementById('login-screen').style.display = 'none';
-            
-            // Se entrou direto pelo atalho /admin, configura o cabeçalho
-            if (window.location.pathname.endsWith('/admin')) {
-                document.getElementById('user-role-name').innerText = "MODO ADMINISTRADOR SUPREMO";
-                document.getElementById('btn-abrir-admin').style.display = 'none';
-            }
-
+            // Oculta os cartões e exibe a tabela de gestão
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('admin-panel-ui').style.display = 'block';
             
@@ -460,10 +680,14 @@
                 const data = await res.json();
                 if (data.success) {
                     alert("Servidor cadastrado com sucesso!");
+                    
+                    // Limpa os inputs
                     document.getElementById('new-nome').value = '';
                     document.getElementById('new-numero').value = '';
                     document.getElementById('new-senha').value = '';
                     document.getElementById('new-email').value = '';
+                    
+                    // Recarrega a tabela
                     validarAcessoAdmin(); 
                 } else {
                     alert("Erro ao cadastrar: " + data.message);
@@ -485,7 +709,7 @@
                 
                 const data = await res.json();
                 if (data.success) {
-                    validarAcessoAdmin(); 
+                    validarAcessoAdmin(); // Recarrega a tabela
                 } else {
                     alert("Erro ao excluir: " + data.message);
                 }
@@ -495,14 +719,9 @@
         }
 
         function fecharAdmin() {
-            // Se o usuário acessou diretamente pelo link /admin, voltar vai levá-lo à tela de login
-            if (window.location.pathname.endsWith('/admin')) {
-                window.location.href = '/'; 
-            } else {
-                // Se acessou logado como gestor, volta para os cartões
-                document.getElementById('admin-panel-ui').style.display = 'none';
-                document.getElementById('main-content').style.display = 'flex';
-            }
+            // Oculta a tabela e volta a mostrar os cartões operacionais
+            document.getElementById('admin-panel-ui').style.display = 'none';
+            document.getElementById('main-content').style.display = 'flex';
         }
     </script>
 </body>
