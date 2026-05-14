@@ -58,7 +58,7 @@
            ========================================= */
         header { display: flex; align-items: center; justify-content: space-between; padding: 15px 40px; margin: 25px auto; width: 95%; max-width: 1400px; border-radius: 20px; background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); opacity: 0; transform: translateY(-20px); animation: fadeDown 1s ease-out 0.5s forwards; }
         @keyframes fadeDown { to { opacity: 1; transform: translateY(0); } }
-        .logo-left, .logo-right { width: 100px; object-fit: contain; transition: transform 0.4s ease; }
+        .logo-left { width: 100px; object-fit: contain; }
         .header-center { flex: 1; text-align: center; }
         header h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(90deg, #fff, #cbd5e1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
         .user-badge { display: inline-block; background: rgba(56, 189, 248, 0.1); color: #38bdf8; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.3); }
@@ -84,7 +84,7 @@
         .btn-excluir:hover { background: #dc2626; }
 
         /* =========================================
-           CONTEÚDO PRINCIPAL (CARTÕES)
+           CONTEÚDO PRINCIPAL E CARTÕES
            ========================================= */
         #main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding-bottom: 80px; width: 100%; }
         h2 { margin-top: 20px; margin-bottom: 30px; font-size: 1.2rem; font-weight: 600; letter-spacing: 4px; color: #94a3b8; text-transform: uppercase; text-align: center; opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards; }
@@ -92,8 +92,9 @@
         .banner { display: inline-flex; justify-content: center; align-items: center; padding: 10px; border-radius: 16px; margin-bottom: 50px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); opacity: 0; animation: fadeIn 1s ease-out 1s forwards; }
         .banner img { width: 160px; border-radius: 8px; }
         @keyframes fadeIn { to { opacity: 1; } }
+        
         .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; padding: 0 25px; }
-        .card { display: none; flex-direction: column; padding: 40px 30px; border-radius: 24px; background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); text-decoration: none; color: white; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease; }
+        .card { display: flex; flex-direction: column; padding: 40px 30px; border-radius: 24px; background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); text-decoration: none; color: white; text-align: center; position: relative; overflow: hidden; transition: all 0.4s ease; }
         .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
         .blue::before { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
         .red::before { background: linear-gradient(90deg, #ef4444, #f87171); }
@@ -145,10 +146,8 @@
             <img src="assets/logo-maranhao.png" alt="Governo do Maranhão">
             <h3>Portal do Servidor</h3>
             <p>Identifique-se para acessar o sistema</p>
-            
             <input type="text" id="numero-acesso" placeholder="Número de Acesso (Matrícula)" required autocomplete="off">
             <input type="password" id="password" placeholder="Senha" required>
-            
             <button id="btn-login" onclick="fazerLogin()">ENTRAR</button>
             <p id="error-msg">Número de acesso ou senha inválidos.</p>
         </div>
@@ -160,7 +159,6 @@
             <div class="header-center">
                 <h1>PORTAL INTEGRADO CSIPRC - COCAIS</h1>
                 <span class="user-badge" id="user-role-name">CARREGANDO...</span>
-                
                 <div>
                     <button id="btn-abrir-admin" class="btn-admin" onclick="validarAcessoAdmin()">⚙️ PAINEL ADMIN</button>
                 </div>
@@ -173,7 +171,6 @@
                 <h2 style="margin:0; color: #f59e0b; letter-spacing: 2px;">GESTÃO DE EQUIPE</h2>
                 <button class="btn-sair" onclick="fecharAdmin()">Voltar ao Portal</button>
             </div>
-
             <div class="form-cadastro">
                 <input type="text" id="new-nome" placeholder="Nome Completo" required>
                 <input type="text" id="new-numero" placeholder="Nº Acesso (Matrícula)" required>
@@ -187,103 +184,26 @@
                 </select>
                 <button class="btn-cadastrar" onclick="cadastrarUsuario()">CADASTRAR</button>
             </div>
-
             <div style="overflow-x: auto;">
                 <table class="admin-table">
                     <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Matrícula</th>
-                            <th>Email</th>
-                            <th>Perfil</th>
-                            <th>Ações</th>
-                        </tr>
+                        <tr><th>Nome</th><th>Matrícula</th><th>Email</th><th>Perfil</th><th>Ações</th></tr>
                     </thead>
-                    <tbody id="lista-servidores">
-                        </tbody>
+                    <tbody id="lista-servidores"></tbody>
                 </table>
             </div>
         </section>
 
         <main id="main-content">
             <h2>BEM-VINDO AO PORTAL OPERACIONAL</h2>
-
             <div class="banner">
                 <img src="assets/banner-csiprc.png" alt="CSIPRC">
             </div>
+            
+            <div class="cards" id="cards-container"></div>
 
-            <div class="cards">
-                
-                <a href="https://relatorio-seguranca-timon.vercel.app/" target="_blank" class="card red" data-role="seguranca">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 10.5l2 2 4-4"></path></svg>
-                    </div>
-                    <h3>RELATÓRIOS DE SEGURANÇA</h3>
-                    <p>Ocorrências, Plantões e Monitoramento Operacional</p>
-                    <button>ACESSAR SISTEMA</button>
-                </a>
-
-                <a href="https://gestao-viagens-csiprc.vercel.app/" target="_blank" class="card green" data-role="gestao">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path></svg>
-                    </div>
-                    <h3>GESTÃO DE DIÁRIAS</h3>
-                    <p>Frota, Solicitações de Viagens e Contas</p>
-                    <button>ACESSAR SISTEMA</button>
-                </a>
-
-                <a href="https://transparencia-csiprc.vercel.app/" target="_blank" class="card purple" data-role="gestao">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                    </div>
-                    <h3>TRANSPARÊNCIA</h3>
-                    <p>Controle de Viagens dos Servidores e Prestação de Contas</p>
-                    <button>ACESSAR SISTEMA</button>
-                </a>
-
-                <a href="https://banco-csiprc.vercel.app" target="_blank" class="card blue" data-role="tecnica">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                    </div>
-                    <h3>BANCO DE DADOS</h3>
-                    <p>Sistema de banco de dados do CSIPRC</p>
-                    <button>ACESSAR SISTEMA</button>
-                </a>
-
-                <a href="https://painel-gestao-sandy.vercel.app/" target="_blank" class="card blue" data-role="tecnica">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    </div>
-                    <h3>CONTROLE 45 DIAS</h3>
-                    <p>Controle de 45 dias dos adolescentes, relatórios e audiências</p>
-                    <button>ACESSAR SISTEMA</button>
-                </a>
-
-            </div>
-
-            <h2 class="section-dev">EM DESENVOLVIMENTO (PRÉVIA)</h2>
-
-            <div class="cards">
-
-                <a href="https://sistema-csiprc-2026.vercel.app/" target="_blank" class="card blue" data-role="gestao">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path><path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path><path d="M8 10h8m-8 4h6"></path></svg>
-                    </div>
-                    <h3>RELATÓRIOS DO CENTRO</h3>
-                    <p>Administração, Educação e Gestão Geral</p>
-                    <button>ACESSAR BETA</button>
-                </a>
-
-                <a href="https://relatorio-equipe-tecnica-psi.vercel.app/" target="_blank" class="card orange" data-role="tecnica">
-                    <div class="icon-wrapper">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                    </div>
-                    <h3>EQUIPE TÉCNICA</h3>
-                    <p>Registros, Psicologia e Auxílio em Atendimentos</p>
-                    <button>ACESSAR BETA</button>
-                </a>
-
-            </div>
+            <h2 class="section-dev" id="titulo-dev" style="display:none;">EM DESENVOLVIMENTO (PRÉVIA)</h2>
+            <div class="cards" id="dev-cards-container"></div>
         </main>
 
         <footer>
@@ -295,7 +215,46 @@
     <script>
         let masterPass = "";
 
-        // Encerramento do loader inicial e VERIFICAÇÃO DE URL (/admin)
+        // ==========================================
+        // DADOS REAIS DO SISTEMA (PROTEÇÃO FRONTEND)
+        // ==========================================
+        const sistemasOperacionais = [
+            {
+                titulo: "RELATÓRIOS DE SEGURANÇA", desc: "Ocorrências, Plantões e Monitoramento Operacional", link: "https://relatorio-seguranca-timon.vercel.app/", cor: "red",
+                perfis: ["seguranca", "admin"], svg: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 10.5l2 2 4-4"></path>'
+            },
+            {
+                titulo: "GESTÃO DE DIÁRIAS", desc: "Frota, Solicitações de Viagens e Contas", link: "https://gestao-viagens-csiprc.vercel.app/", cor: "green",
+                perfis: ["gestao", "admin"], svg: '<path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path>'
+            },
+            {
+                titulo: "TRANSPARÊNCIA", desc: "Controle de Viagens dos Servidores e Prestação de Contas", link: "https://transparencia-csiprc.vercel.app/", cor: "purple",
+                perfis: ["gestao", "admin"], svg: '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>'
+            },
+            {
+                titulo: "BANCO DE DADOS", desc: "Sistema de banco de dados do CSIPRC", link: "https://banco-csiprc.vercel.app", cor: "blue",
+                perfis: ["tecnica", "admin"], svg: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>'
+            },
+            {
+                titulo: "CONTROLE 45 DIAS", desc: "Controle de 45 dias dos adolescentes, relatórios e audiências", link: "https://painel-gestao-sandy.vercel.app/", cor: "blue",
+                perfis: ["tecnica", "admin"], svg: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline>'
+            }
+        ];
+
+        const sistemasEmDesenvolvimento = [
+            {
+                titulo: "RELATÓRIOS DO CENTRO", desc: "Administração, Educação e Gestão Geral", link: "https://sistema-csiprc-2026.vercel.app/", cor: "blue",
+                perfis: ["gestao", "admin"], svg: '<path d="M16 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3"></path><path d="M8 2a2 2 0 0 1 2 2h4a2 2 0 0 1 2-2"></path><path d="M8 10h8m-8 4h6"></path>'
+            },
+            {
+                titulo: "EQUIPE TÉCNICA", desc: "Registros, Psicologia e Auxílio em Atendimentos", link: "https://relatorio-equipe-tecnica-psi.vercel.app/", cor: "orange",
+                perfis: ["tecnica", "admin"], svg: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>'
+            }
+        ];
+
+        // ==========================================
+        // CARREGAMENTO E LOGIN AUTOMÁTICO (LOCALSTORAGE)
+        // ==========================================
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
@@ -303,16 +262,19 @@
                 setTimeout(() => { loader.style.visibility = 'hidden'; }, 800);
             }, 800);
 
-            // SE O USUÁRIO DIGITOU /admin NA URL
-            if (window.location.pathname.endsWith('/admin')) {
+            // Verifica se o servidor já está logado na memória do navegador
+            const usuarioSalvo = localStorage.getItem('usuarioPortalCSIPRC');
+            
+            if (usuarioSalvo) {
+                // Se já estiver logado, pula a tela de senha e vai direto para o painel!
+                aplicarPermissoes(JSON.parse(usuarioSalvo));
+            } else if (window.location.pathname.endsWith('/admin')) {
+                // Se não estiver logado e tentou acessar /admin
                 document.getElementById('login-screen').style.display = 'none';
-                setTimeout(validarAcessoAdmin, 500); // Aciona o pop-up de senha mestre imediatamente
+                setTimeout(validarAcessoAdmin, 500); 
             }
         });
 
-        // ==========================================
-        // 1. LOGIN PRINCIPAL DO SERVIDOR
-        // ==========================================
         async function fazerLogin() {
             const numeroAcesso = document.getElementById('numero-acesso').value;
             const password = document.getElementById('password').value;
@@ -335,13 +297,14 @@
                 const data = await response.json();
 
                 if (data.success) {
+                    // MUDANÇA: Salva o utilizador na memória do navegador para ele não deslogar ao dar F5
+                    localStorage.setItem('usuarioPortalCSIPRC', JSON.stringify(data.user));
                     aplicarPermissoes(data.user);
                 } else {
                     errorMsg.innerText = data.message || "Número de acesso ou senha inválidos.";
                     errorMsg.style.display = "block";
                 }
             } catch (err) {
-                console.error(err);
                 errorMsg.innerText = "Erro ao conectar com o banco de dados.";
                 errorMsg.style.display = "block";
             } finally {
@@ -350,30 +313,59 @@
             }
         }
 
+        // ==========================================
+        // CRIAÇÃO SEGURA DOS CARTÕES (PROTEÇÃO REAL)
+        // ==========================================
         function aplicarPermissoes(user) {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-portal').style.display = 'flex';
             document.getElementById('user-role-name').innerText = `OLÁ, ${user.nome_completo.toUpperCase()} | PERFIL: ${user.role.toUpperCase()}`;
 
-            // MUDANÇA: O botão Admin agora aparece para 'gestao' e para o novo 'admin'
+            // Controle do Painel Admin
             if (user.role === 'gestao' || user.role === 'admin') {
                 document.getElementById('btn-abrir-admin').style.display = 'inline-block';
             }
 
-            // Exibe estritamente os cartões
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const roleRequired = card.getAttribute('data-role');
-                // MUDANÇA: Se o usuário for 'admin', ele vê TUDO. Se não, vê só o dele.
-                if (user.role === 'admin' || roleRequired === user.role) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
+            // Injeta os cartões APENAS se o servidor tiver permissão. Quem não tem, nem recebe o código HTML.
+            const container = document.getElementById('cards-container');
+            const devContainer = document.getElementById('dev-cards-container');
+            const tituloDev = document.getElementById('titulo-dev');
+            
+            container.innerHTML = '';
+            devContainer.innerHTML = '';
+            let temCartaoDev = false;
+
+            sistemasOperacionais.forEach(sys => {
+                if (sys.perfis.includes(user.role)) {
+                    container.innerHTML += gerarHtmlCartao(sys, 'ACESSAR SISTEMA');
                 }
             });
+
+            sistemasEmDesenvolvimento.forEach(sys => {
+                if (sys.perfis.includes(user.role)) {
+                    devContainer.innerHTML += gerarHtmlCartao(sys, 'ACESSAR BETA');
+                    temCartaoDev = true;
+                }
+            });
+
+            if(temCartaoDev) tituloDev.style.display = 'block';
+        }
+
+        function gerarHtmlCartao(sys, textoBotao) {
+            return `
+            <a href="${sys.link}" target="_blank" class="card ${sys.cor}">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">${sys.svg}</svg>
+                </div>
+                <h3>${sys.titulo}</h3>
+                <p>${sys.desc}</p>
+                <button>${textoBotao}</button>
+            </a>`;
         }
 
         function logout() {
+            // MUDANÇA: Apaga o registo do navegador e desloga com segurança
+            localStorage.removeItem('usuarioPortalCSIPRC');
             window.location.href = '/'; 
         }
 
@@ -382,28 +374,22 @@
         });
 
         // ==========================================
-        // 2. FUNÇÕES DO PAINEL ADMIN
+        // 2. FUNÇÕES DO PAINEL ADMIN (Mantidas intactas)
         // ==========================================
         async function validarAcessoAdmin() {
             const senha = prompt("ACESSO RESTRITO\nDigite a SENHA MESTRE da administração:");
-            
             if (!senha) {
-                // Se a pessoa cancelar o pop-up e estiver na página /admin, recambiamos pra fora
                 if (window.location.pathname.endsWith('/admin')) window.location.href = '/';
                 return;
             }
-
             masterPass = senha;
-
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'LISTAR', masterPassword: masterPass })
                 });
-
                 const data = await res.json();
-                
                 if (data.success) {
                     exibirPainelAdmin(data.users);
                 } else {
@@ -419,16 +405,12 @@
         function exibirPainelAdmin(users) {
             document.getElementById('main-portal').style.display = 'flex';
             document.getElementById('login-screen').style.display = 'none';
-            
-            // Se entrou direto pelo atalho /admin, configura o cabeçalho
             if (window.location.pathname.endsWith('/admin')) {
                 document.getElementById('user-role-name').innerText = "MODO ADMINISTRADOR SUPREMO";
                 document.getElementById('btn-abrir-admin').style.display = 'none';
             }
-
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('admin-panel-ui').style.display = 'block';
-            
             const tbody = document.getElementById('lista-servidores');
             tbody.innerHTML = users.map(u => `
                 <tr>
@@ -449,18 +431,13 @@
                 email: document.getElementById('new-email').value,
                 role: document.getElementById('new-role').value
             };
-
-            if(!userData.nome || !userData.numero || !userData.senha || !userData.email) {
-                return alert("Preencha todos os campos para cadastrar!");
-            }
-
+            if(!userData.nome || !userData.numero || !userData.senha || !userData.email) return alert("Preencha todos os campos para cadastrar!");
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'CADASTRAR', masterPassword: masterPass, userData })
                 });
-                
                 const data = await res.json();
                 if (data.success) {
                     alert("Servidor cadastrado com sucesso!");
@@ -469,41 +446,28 @@
                     document.getElementById('new-senha').value = '';
                     document.getElementById('new-email').value = '';
                     validarAcessoAdmin(); 
-                } else {
-                    alert("Erro ao cadastrar: " + data.message);
-                }
-            } catch (err) {
-                alert("Erro de conexão.");
-            }
+                } else alert("Erro ao cadastrar: " + data.message);
+            } catch (err) { alert("Erro de conexão."); }
         }
 
         async function excluirUsuario(id, nome) {
             if (!confirm(`ATENÇÃO!\nTem certeza que deseja EXCLUIR o acesso de: ${nome}?`)) return;
-
             try {
                 const res = await fetch('/api/admin', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'EXCLUIR', masterPassword: masterPass, userId: id })
                 });
-                
                 const data = await res.json();
-                if (data.success) {
-                    validarAcessoAdmin(); 
-                } else {
-                    alert("Erro ao excluir: " + data.message);
-                }
-            } catch (err) {
-                alert("Erro de conexão.");
-            }
+                if (data.success) validarAcessoAdmin(); 
+                else alert("Erro ao excluir: " + data.message);
+            } catch (err) { alert("Erro de conexão."); }
         }
 
         function fecharAdmin() {
-            // Se o usuário acessou diretamente pelo link /admin, voltar vai levá-lo à tela de login
             if (window.location.pathname.endsWith('/admin')) {
                 window.location.href = '/'; 
             } else {
-                // Se acessou logado como gestor, volta para os cartões
                 document.getElementById('admin-panel-ui').style.display = 'none';
                 document.getElementById('main-content').style.display = 'flex';
             }
