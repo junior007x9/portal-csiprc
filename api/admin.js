@@ -1,6 +1,6 @@
-import { createClient } from '@libsql/client';
+const { createClient } = require('@libsql/client');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     const client = createClient({
         url: process.env.TURSO_DATABASE_URL,
         authToken: process.env.TURSO_AUTH_TOKEN,
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
     const { action, masterPassword, userData, userId } = req.body;
 
-    // VERIFICAÇÃO DE SEGURANÇA: Só prossegue se a Senha Mestre estiver correta
+    // VERIFICAÇÃO DE SEGURANÇA
     if (masterPassword !== process.env.ADMIN_MASTER_PASSWORD) {
         return res.status(403).json({ success: false, message: 'Senha Mestre Inválida' });
     }
