@@ -5,6 +5,6 @@
     "start": "node api/login.js"
   },
   "dependencies": {
-    "@libsql/client": "latest"
+    "@libsql/client": "0.14.0"
   }
 }
