@@ -183,6 +183,7 @@
                     <option value="seguranca">Segurança</option>
                     <option value="tecnica">Equipe Técnica</option>
                     <option value="gestao">Gestão</option>
+                    <option value="admin">Administrador Geral</option>
                 </select>
                 <button class="btn-cadastrar" onclick="cadastrarUsuario()">CADASTRAR</button>
             </div>
@@ -354,14 +355,17 @@
             document.getElementById('main-portal').style.display = 'flex';
             document.getElementById('user-role-name').innerText = `OLÁ, ${user.nome_completo.toUpperCase()} | PERFIL: ${user.role.toUpperCase()}`;
 
-            if (user.role === 'gestao') {
+            // MUDANÇA: O botão Admin agora aparece para 'gestao' e para o novo 'admin'
+            if (user.role === 'gestao' || user.role === 'admin') {
                 document.getElementById('btn-abrir-admin').style.display = 'inline-block';
             }
 
+            // Exibe estritamente os cartões
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 const roleRequired = card.getAttribute('data-role');
-                if (roleRequired === user.role) {
+                // MUDANÇA: Se o usuário for 'admin', ele vê TUDO. Se não, vê só o dele.
+                if (user.role === 'admin' || roleRequired === user.role) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
