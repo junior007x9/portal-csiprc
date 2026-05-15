@@ -1,44 +1,64 @@
 const { createClient } = require('@libsql/client');
-const bcrypt = require('bcryptjs'); // Puxa a biblioteca de criptografia
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 module.exports = async function handler(req, res) {
-    const client = createClient({
-        url: process.env.TURSO_DATABASE_URL,
-        authToken: process.env.TURSO_AUTH_TOKEN,
-    });
+    const { action, masterPassword, userData, userId, token, avisoMsg } = req.body;
 
-    const { action, masterPassword, userData, userId } = req.body;
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (decoded.role !== 'admin' && decoded.role !== 'gestao') {
+            return res.status(403).json({ success: false, message: 'Acesso negado' });
+        }
+    } catch (e) {
+        return res.status(401).json({ success: false, message: 'Sessão inválida' });
+    }
 
-    // VERIFICAÇÃO DE SEGURANÇA MESTRE
     if (masterPassword !== process.env.ADMIN_MASTER_PASSWORD) {
         return res.status(403).json({ success: false, message: 'Senha Mestre Inválida' });
     }
 
+    const client = createClient({ url: process.env.TURSO_DATABASE_URL, authToken: process.env.TURSO_AUTH_TOKEN });
+
     try {
-        if (req.method === 'POST' && action === 'LISTAR') {
-            // Removemos as senhas da lista por segurança extra
+        // --- FUNÇÕES ANTIGAS DE GESTÃO DE USUÁRIOS ---
+        if (action === 'LISTAR') {
             const result = await client.execute('SELECT id, numero_acesso, nome_completo, email, role FROM servidores');
             return res.status(200).json({ success: true, users: result.rows });
         }
-
-        if (req.method === 'POST' && action === 'CADASTRAR') {
-            // CRIPTOGRAFIA EM AÇÃO: Transforma a senha normal num código irreversível
-            const salt = bcrypt.genSaltSync(10);
-            const hashSenha = bcrypt.hashSync(userData.senha, salt);
-
-            await client.execute({
-                sql: 'INSERT INTO servidores (numero_acesso, senha, nome_completo, email, role) VALUES (?, ?, ?, ?, ?)',
-                args: [userData.numero, hashSenha, userData.nome, userData.email, userData.role]
-            });
-            return res.status(200).json({ success: true, message: 'Cadastrado com sucesso' });
+        if (action === 'CADASTRAR') {
+            const hash = bcrypt.hashSync(userData.senha, 10);
+            await client.execute({ sql: 'INSERT INTO servidores (numero_acesso, senha, nome_completo, email, role) VALUES (?, ?, ?, ?, ?)', args: [userData.numero, hash, userData.nome, userData.email, userData.role] });
+            return res.status(200).json({ success: true });
+        }
+        if (action === 'EDITAR') {
+            let sql = 'UPDATE servidores SET nome_completo = ?, email = ?, role = ? WHERE id = ?';
+            let args = [userData.nome, userData.email, userData.role, userId];
+            if (userData.senha) {
+                sql = 'UPDATE servidores SET nome_completo = ?, email = ?, role = ?, senha = ? WHERE id = ?';
+                args = [userData.nome, userData.email, userData.role, bcrypt.hashSync(userData.senha, 10), userId];
+            }
+            await client.execute({ sql, args });
+            return res.status(200).json({ success: true });
+        }
+        if (action === 'EXCLUIR') {
+            await client.execute({ sql: 'DELETE FROM servidores WHERE id = ?', args: [userId] });
+            return res.status(200).json({ success: true });
         }
 
-        if (req.method === 'POST' && action === 'EXCLUIR') {
-            await client.execute({
-                sql: 'DELETE FROM servidores WHERE id = ?',
-                args: [userId]
-            });
-            return res.status(200).json({ success: true, message: 'Usuário removido' });
+        // --- NOVAS FUNÇÕES (AUDITORIA E MURAL) ---
+        if (action === 'LISTAR_LOGS') {
+            const result = await client.execute('SELECT servidor_nome, matricula, data_hora FROM logs_acesso ORDER BY id DESC LIMIT 50');
+            return res.status(200).json({ success: true, logs: result.rows });
+        }
+        if (action === 'ATUALIZAR_AVISO') {
+            // Desativa avisos antigos
+            await client.execute('UPDATE avisos SET ativo = 0');
+            // Se mandou mensagem nova, ativa ela
+            if (avisoMsg && avisoMsg.trim() !== '') {
+                await client.execute({ sql: 'INSERT INTO avisos (mensagem, ativo) VALUES (?, 1)', args: [avisoMsg] });
+            }
+            return res.status(200).json({ success: true });
         }
 
     } catch (error) {

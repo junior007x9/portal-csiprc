@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f172a">
     <title>Portal Integrado CSIPRC - Região dos Cocais</title>
     
+    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -48,34 +49,61 @@
         </header>
 
         <section id="admin-panel-ui">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin:0; color: #f59e0b; letter-spacing: 2px;">GESTÃO DE EQUIPE</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h2 style="margin:0; color: #f59e0b; letter-spacing: 2px;">PAINEL DE ADMINISTRAÇÃO</h2>
                 <button class="btn-sair" onclick="fecharAdmin()">Voltar ao Portal</button>
             </div>
-            <div class="form-cadastro">
-                <input type="text" id="new-nome" placeholder="Nome Completo" required>
-                <input type="text" id="new-numero" placeholder="Nº Acesso (Matrícula)" required>
-                <input type="password" id="new-senha" placeholder="Senha" required>
-                <input type="email" id="new-email" placeholder="E-mail" required>
-                <select id="new-role">
-                    <option value="seguranca">Segurança</option>
-                    <option value="tecnica">Equipe Técnica</option>
-                    <option value="gestao">Gestão</option>
-                    <option value="admin">Administrador Geral</option>
-                </select>
-                <button class="btn-cadastrar" onclick="cadastrarUsuario()">CADASTRAR</button>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" id="btn-aba-usuarios" onclick="mudarAbaAdmin('aba-usuarios')">Gestão de Equipe</button>
+                <button class="tab-btn" id="btn-aba-auditoria" onclick="mudarAbaAdmin('aba-auditoria')">Auditoria & Mural</button>
             </div>
-            <div style="overflow-x: auto;">
-                <table class="admin-table">
-                    <thead>
-                        <tr><th>Nome</th><th>Matrícula</th><th>Email</th><th>Perfil</th><th>Ações</th></tr>
-                    </thead>
-                    <tbody id="lista-servidores"></tbody>
-                </table>
+
+            <div id="aba-usuarios" class="tab-content active">
+                <div class="form-cadastro">
+                    <input type="text" id="new-nome" placeholder="Nome Completo" required>
+                    <input type="text" id="new-numero" placeholder="Nº Acesso (Matrícula)" required>
+                    <input type="password" id="new-senha" placeholder="Senha" required>
+                    <input type="email" id="new-email" placeholder="E-mail" required>
+                    <select id="new-role">
+                        <option value="seguranca">Segurança</option>
+                        <option value="tecnica">Equipe Técnica</option>
+                        <option value="gestao">Gestão</option>
+                        <option value="admin">Administrador Geral</option>
+                    </select>
+                    <button class="btn-cadastrar" onclick="cadastrarUsuario()">CADASTRAR</button>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr><th>Nome</th><th>Matrícula</th><th>Perfil</th><th>Ações</th></tr>
+                        </thead>
+                        <tbody id="lista-servidores"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="aba-auditoria" class="tab-content">
+                <div class="mural-form">
+                    <input type="text" id="novo-aviso-texto" placeholder="Digite um aviso importante para todos (deixe em branco para remover o aviso atual)">
+                    <button class="btn-cadastrar" onclick="salvarAviso()">PUBLICAR AVISO</button>
+                </div>
+
+                <h3 style="color: white; margin-bottom: 15px; margin-top: 10px;">Últimos Acessos (Auditoria)</h3>
+                <div style="overflow-x: auto;">
+                    <table class="admin-table logs-table">
+                        <thead>
+                            <tr><th>Data e Hora do Login</th><th>Nome do Servidor</th><th>Matrícula</th></tr>
+                        </thead>
+                        <tbody id="lista-logs"></tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
         <main id="main-content">
+            <div id="mural-aviso" class="mural-aviso"></div>
+
             <h2>BEM-VINDO AO PORTAL OPERACIONAL</h2>
             <div class="banner">
                 <img src="assets/banner-csiprc.png" alt="CSIPRC">
@@ -94,5 +122,13 @@
     </div>
 
     <script src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.log('Erro PWA', err));
+            });
+        }
+    </script>
 </body>
 </html>

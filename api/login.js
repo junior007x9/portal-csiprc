@@ -23,15 +23,23 @@ module.exports = async function handler(req, res) {
             const senhaValida = bcrypt.compareSync(password, user.senha);
 
             if (senhaValida) {
-                // Criar o Token JWT (Vale por 24 horas)
-                const token = jwt.sign(
-                    { id: user.id, role: user.role },
-                    process.env.JWT_SECRET,
-                    { expiresIn: '24h' }
-                );
-
+                const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
                 delete user.senha;
-                return res.status(200).json({ success: true, user, token });
+
+                // 1. ANOTAR NO LOG DE AUDITORIA (Hora de Brasília)
+                await client.execute({
+                    sql: 'INSERT INTO logs_acesso (servidor_nome, matricula, data_hora) VALUES (?, ?, datetime("now", "-3 hours"))',
+                    args: [user.nome_completo, user.numero_acesso]
+                });
+
+                // 2. BUSCAR O AVISO ATIVO PARA MOSTRAR NO MURAL
+                let mensagemAviso = null;
+                try {
+                    const avisoRes = await client.execute('SELECT mensagem FROM avisos WHERE ativo = 1 LIMIT 1');
+                    if (avisoRes.rows.length > 0) mensagemAviso = avisoRes.rows[0].mensagem;
+                } catch(e) { /* Ignora se tabela não existir ainda */ }
+
+                return res.status(200).json({ success: true, user, token, aviso: mensagemAviso });
             }
         }
         return res.status(401).json({ success: false, message: 'Credenciais inválidas' });
