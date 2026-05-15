@@ -18,15 +18,21 @@ window.addEventListener('load', () => {
     setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 800);
 
     const sessao = localStorage.getItem('usuarioPortalCSIPRC');
-    // Força o login novamente para gravar log de entrada todos os dias se necessário
     if (sessao) {
         aplicarPermissoes(JSON.parse(sessao));
     }
 });
 
 async function fazerLogin() {
-    // CORREÇÃO: Pegamos o valor da nova ID 'identificacao'
-    const identificacao = document.getElementById('identificacao').value;
+    // CORREÇÃO ANTI-CACHE: Pega o input com ID novo OU ID velho
+    const inputIdentificacao = document.getElementById('identificacao') || document.getElementById('numero-acesso');
+    
+    if (!inputIdentificacao) {
+        alert("Por favor, atualize a página (CTRL + F5) para carregar a nova versão.");
+        return;
+    }
+
+    const identificacao = inputIdentificacao.value;
     const password = document.getElementById('password').value;
     const btn = document.getElementById('btn-login');
 
@@ -67,7 +73,6 @@ function aplicarPermissoes(user) {
         document.getElementById('btn-abrir-admin').style.display = 'inline-block';
     }
 
-    // Verifica se existe aviso no banco
     const mural = document.getElementById('mural-aviso');
     if (user.aviso && user.aviso.trim() !== "") {
         mural.innerText = "📢 AVISO: " + user.aviso;
@@ -154,7 +159,6 @@ async function carregarLogs() {
     const data = await res.json();
     if (data.success) {
         document.getElementById('lista-logs').innerHTML = data.logs.map(log => {
-            // Formatar Data
             const dataHora = new Date(log.data_hora).toLocaleString('pt-BR');
             return `<tr><td style="color:#f59e0b;">${dataHora}</td><td>${log.servidor_nome}</td><td>${log.matricula}</td></tr>`;
         }).join('');
