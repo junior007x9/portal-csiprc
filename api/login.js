@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 module.exports = async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).json({ success: false, message: 'Método não permitido' });
 
-    const { numeroAcesso, password } = req.body;
+    // Mudamos o nome da variável para 'identificacao' (pode ser email ou matrícula)
+    const { identificacao, password } = req.body;
 
     try {
         const client = createClient({
@@ -13,9 +14,10 @@ module.exports = async function handler(req, res) {
             authToken: process.env.TURSO_AUTH_TOKEN,
         });
 
+        // A MÁGICA ACONTECE AQUI: Procuramos onde numero_acesso = ? OU email = ?
         const result = await client.execute({
-            sql: 'SELECT id, numero_acesso, senha, nome_completo, email, role FROM servidores WHERE numero_acesso = ?',
-            args: [numeroAcesso]
+            sql: 'SELECT id, numero_acesso, senha, nome_completo, email, role FROM servidores WHERE numero_acesso = ? OR email = ?',
+            args: [identificacao, identificacao] // Mandamos o que a pessoa digitou para os dois campos
         });
 
         if (result.rows.length > 0) {
@@ -26,18 +28,18 @@ module.exports = async function handler(req, res) {
                 const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
                 delete user.senha;
 
-                // 1. ANOTAR NO LOG DE AUDITORIA (Hora de Brasília)
+                // Anota o log de auditoria
                 await client.execute({
                     sql: 'INSERT INTO logs_acesso (servidor_nome, matricula, data_hora) VALUES (?, ?, datetime("now", "-3 hours"))',
                     args: [user.nome_completo, user.numero_acesso]
                 });
 
-                // 2. BUSCAR O AVISO ATIVO PARA MOSTRAR NO MURAL
+                // Puxa o aviso ativo
                 let mensagemAviso = null;
                 try {
                     const avisoRes = await client.execute('SELECT mensagem FROM avisos WHERE ativo = 1 LIMIT 1');
                     if (avisoRes.rows.length > 0) mensagemAviso = avisoRes.rows[0].mensagem;
-                } catch(e) { /* Ignora se tabela não existir ainda */ }
+                } catch(e) {}
 
                 return res.status(200).json({ success: true, user, token, aviso: mensagemAviso });
             }

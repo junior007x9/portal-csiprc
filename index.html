@@ -28,10 +28,12 @@
             <img src="assets/logo-maranhao.png" alt="Governo do Maranhão">
             <h3>Portal do Servidor</h3>
             <p>Identifique-se para acessar o sistema</p>
-            <input type="text" id="numero-acesso" placeholder="Número de Acesso (Matrícula)" required autocomplete="off">
+            
+            <input type="text" id="identificacao" placeholder="Matrícula ou E-mail" required autocomplete="off">
             <input type="password" id="password" placeholder="Senha" required>
+            
             <button id="btn-login" onclick="fazerLogin()">ENTRAR</button>
-            <p id="error-msg">Número de acesso ou senha inválidos.</p>
+            <p id="error-msg">Credenciais inválidas.</p>
         </div>
     </div>
 

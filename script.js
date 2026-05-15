@@ -25,9 +25,12 @@ window.addEventListener('load', () => {
 });
 
 async function fazerLogin() {
-    const numeroAcesso = document.getElementById('numero-acesso').value;
+    // CORREÇÃO: Pegamos o valor da nova ID 'identificacao'
+    const identificacao = document.getElementById('identificacao').value;
     const password = document.getElementById('password').value;
     const btn = document.getElementById('btn-login');
+
+    if(!identificacao || !password) return;
 
     btn.disabled = true;
     btn.innerText = "AUTENTICANDO...";
@@ -36,7 +39,7 @@ async function fazerLogin() {
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ numeroAcesso, password })
+            body: JSON.stringify({ identificacao, password })
         });
         const data = await response.json();
 
