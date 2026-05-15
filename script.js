@@ -14,12 +14,19 @@ const sistemasEmDesenvolvimento = [
     { titulo: "EQUIPE TÉCNICA", desc: "Registros, Psicologia e Auxílio em Atendimentos", link: "https://relatorio-equipe-tecnica-psi.vercel.app/", cor: "orange", perfis: ["tecnica", "admin"], svg: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>' }
 ];
 
+// O CÉREBRO DO CARREGAMENTO INICIAL
 window.addEventListener('load', () => {
     setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 800);
 
     const sessao = localStorage.getItem('usuarioPortalCSIPRC');
+    
     if (sessao) {
+        // Se já tem sessão, entra direto
         aplicarPermissoes(JSON.parse(sessao));
+    } else if (window.location.pathname.endsWith('/admin')) {
+        // SE DIGITOU /admin NO LINK, ESCONDE O LOGIN E CHAMA A SENHA MESTRE
+        document.getElementById('login-screen').style.display = 'none';
+        setTimeout(validarAcessoAdmin, 500); 
     }
 });
 
@@ -116,63 +123,85 @@ function mudarAbaAdmin(abaId) {
 
 async function validarAcessoAdmin() {
     const senha = prompt("SENHA MESTRE:");
-    if (!senha) return;
+    if (!senha) {
+        if (window.location.pathname.endsWith('/admin')) window.location.href = '/';
+        return;
+    }
     masterPass = senha;
     carregarPainelAdminCompleto();
 }
 
 async function carregarPainelAdminCompleto() {
+    // Só tenta carregar se a senha mestre estiver configurada, mas a verificação real ocorre no backend
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('admin-panel-ui').style.display = 'block';
-    carregarListaUsuarios();
-    carregarLogs();
+    
+    // Tratamento para não bugar caso acesse o /admin antes de ter feito o primeiro login
+    const sessaoStr = localStorage.getItem('usuarioPortalCSIPRC');
+    const token = sessaoStr ? JSON.parse(sessaoStr).token : 'modo-recuperacao';
+
+    carregarListaUsuarios(token);
+    carregarLogs(token);
 }
 
-async function carregarListaUsuarios() {
-    const sessao = JSON.parse(localStorage.getItem('usuarioPortalCSIPRC'));
-    const res = await fetch('/api/admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'LISTAR', masterPassword: masterPass, token: sessao.token })
-    });
-    const data = await res.json();
-    if (data.success) {
-        document.getElementById('lista-servidores').innerHTML = data.users.map(u => `
-            <tr>
-                <td>${u.nome_completo}</td><td>${u.numero_acesso}</td><td><span class="user-badge">${u.role}</span></td>
-                <td>
-                    <button onclick="prepararEdicao(${JSON.stringify(u).replace(/"/g, '&quot;')})" style="background:#38bdf8; color:black; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">Editar</button>
-                    <button class="btn-excluir" onclick="excluirUsuario(${u.id}, '${u.nome_completo}')">Excluir</button>
-                </td>
-            </tr>
-        `).join('');
+async function carregarListaUsuarios(tokenParam) {
+    try {
+        const res = await fetch('/api/admin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // Como você está acessando direto pelo /admin para recuperar, mandamos a Senha Mestre!
+            // O backend da Vercel que nós configuramos lá atrás libera se a Senha Mestre bater, mesmo sem o token.
+            body: JSON.stringify({ action: 'LISTAR', masterPassword: masterPass, token: tokenParam })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            document.getElementById('lista-servidores').innerHTML = data.users.map(u => `
+                <tr>
+                    <td>${u.nome_completo}</td><td>${u.numero_acesso}</td><td><span class="user-badge">${u.role}</span></td>
+                    <td>
+                        <button onclick="prepararEdicao(${JSON.stringify(u).replace(/"/g, '&quot;')})" style="background:#38bdf8; color:black; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">Editar</button>
+                        <button class="btn-excluir" onclick="excluirUsuario(${u.id}, '${u.nome_completo}')">Excluir</button>
+                    </td>
+                </tr>
+            `).join('');
+        } else {
+            alert("Acesso Negado: Senha Mestre Inválida!");
+            if (window.location.pathname.endsWith('/admin')) window.location.href = '/';
+        }
+    } catch(err) {
+        console.error(err);
     }
 }
 
-async function carregarLogs() {
-    const sessao = JSON.parse(localStorage.getItem('usuarioPortalCSIPRC'));
-    const res = await fetch('/api/admin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'LISTAR_LOGS', masterPassword: masterPass, token: sessao.token })
-    });
-    const data = await res.json();
-    if (data.success) {
-        document.getElementById('lista-logs').innerHTML = data.logs.map(log => {
-            const dataHora = new Date(log.data_hora).toLocaleString('pt-BR');
-            return `<tr><td style="color:#f59e0b;">${dataHora}</td><td>${log.servidor_nome}</td><td>${log.matricula}</td></tr>`;
-        }).join('');
+async function carregarLogs(tokenParam) {
+    try {
+        const res = await fetch('/api/admin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'LISTAR_LOGS', masterPassword: masterPass, token: tokenParam })
+        });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('lista-logs').innerHTML = data.logs.map(log => {
+                const dataHora = new Date(log.data_hora).toLocaleString('pt-BR');
+                return `<tr><td style="color:#f59e0b;">${dataHora}</td><td>${log.servidor_nome}</td><td>${log.matricula}</td></tr>`;
+            }).join('');
+        }
+    } catch(err) {
+        console.error(err);
     }
 }
 
 async function salvarAviso() {
-    const sessao = JSON.parse(localStorage.getItem('usuarioPortalCSIPRC'));
+    const sessaoStr = localStorage.getItem('usuarioPortalCSIPRC');
+    const token = sessaoStr ? JSON.parse(sessaoStr).token : 'modo-recuperacao';
     const novoAviso = document.getElementById('novo-aviso-texto').value;
     
     const res = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'ATUALIZAR_AVISO', masterPassword: masterPass, token: sessao.token, avisoMsg: novoAviso })
+        body: JSON.stringify({ action: 'ATUALIZAR_AVISO', masterPassword: masterPass, token: token, avisoMsg: novoAviso })
     });
     const data = await res.json();
     if (data.success) {
@@ -195,7 +224,9 @@ function prepararEdicao(user) {
 }
 
 async function cadastrarUsuario() {
-    const sessao = JSON.parse(localStorage.getItem('usuarioPortalCSIPRC'));
+    const sessaoStr = localStorage.getItem('usuarioPortalCSIPRC');
+    const token = sessaoStr ? JSON.parse(sessaoStr).token : 'modo-recuperacao';
+
     const userData = {
         nome: document.getElementById('new-nome').value,
         numero: document.getElementById('new-numero').value,
@@ -211,7 +242,7 @@ async function cadastrarUsuario() {
     const res = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, masterPassword: masterPass, userData, userId: editandoId, token: sessao.token })
+        body: JSON.stringify({ action, masterPassword: masterPass, userData, userId: editandoId, token: token })
     });
 
     if ((await res.json()).success) {
@@ -222,27 +253,34 @@ async function cadastrarUsuario() {
         document.getElementById('new-numero').disabled = false;
         document.getElementById('new-senha').placeholder = "Senha";
         document.querySelector('.btn-cadastrar').innerText = "CADASTRAR";
-        carregarListaUsuarios();
+        carregarListaUsuarios(token);
     }
 }
 
 async function excluirUsuario(id, nome) {
     if (!confirm(`Deseja EXCLUIR o acesso de: ${nome}?`)) return;
-    const sessao = JSON.parse(localStorage.getItem('usuarioPortalCSIPRC'));
+    
+    const sessaoStr = localStorage.getItem('usuarioPortalCSIPRC');
+    const token = sessaoStr ? JSON.parse(sessaoStr).token : 'modo-recuperacao';
+
     const res = await fetch('/api/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'EXCLUIR', masterPassword: masterPass, userId: id, token: sessao.token })
+        body: JSON.stringify({ action: 'EXCLUIR', masterPassword: masterPass, userId: id, token: token })
     });
-    if ((await res.json()).success) carregarListaUsuarios();
+    if ((await res.json()).success) carregarListaUsuarios(token);
 }
 
 function logout() {
     localStorage.removeItem('usuarioPortalCSIPRC');
-    location.reload();
+    window.location.href = '/';
 }
 
 function fecharAdmin() {
-    document.getElementById('admin-panel-ui').style.display = 'none';
-    document.getElementById('main-content').style.display = 'flex';
+    if (window.location.pathname.endsWith('/admin')) {
+        window.location.href = '/'; 
+    } else {
+        document.getElementById('admin-panel-ui').style.display = 'none';
+        document.getElementById('main-content').style.display = 'flex';
+    }
 }
