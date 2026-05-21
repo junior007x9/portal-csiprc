@@ -2,7 +2,7 @@ let masterPass = "";
 let editandoId = null;
 
 const sistemasOperacionais = [
-    { titulo: "RELATÓRIOS DE SEGURANÇA", desc: "Ocorrências, Plantões e Monitoramento Operacional", link: "https://relatorio-seguranca-timon.vercel.app/", cor: "red", perfis: ["seguranca", "admin"], svg: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 10.5l2 2 4-4"></path>' },
+    { titulo: "RELATÓRIOS DE SEGURANÇA", desc: "Ocorrências, Plantões e Monitoramento Operacional", link: "https://relatorio-seguranca-timon.vercel.app/", cor: "red", perfis: ["seguranca", "admin", "gestao"], svg: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 10.5l2 2 4-4"></path>' },
     { titulo: "GESTÃO DE DIÁRIAS", desc: "Frota, Solicitações de Viagens e Contas", link: "https://gestao-viagens-csiprc.vercel.app/", cor: "green", perfis: ["gestao", "admin"], svg: '<path d="M5 11h14l1 4M5 11l-1 4m1 0h16m-16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm16 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM8 11V8a4 4 0 0 1 8 0v3"></path>' },
     { titulo: "TRANSPARÊNCIA", desc: "Controle de Viagens dos Servidores e Prestação de Contas", link: "https://transparencia-csiprc.vercel.app/", cor: "purple", perfis: ["gestao", "admin"], svg: '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle>' },
     { titulo: "BANCO DE DADOS", desc: "Sistema de banco de dados do CSIPRC", link: "https://banco-csiprc.vercel.app", cor: "blue", perfis: ["tecnica", "admin"], svg: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>' },
@@ -21,17 +21,14 @@ window.addEventListener('load', () => {
     const sessao = localStorage.getItem('usuarioPortalCSIPRC');
     
     if (sessao) {
-        // Se já tem sessão, entra direto
         aplicarPermissoes(JSON.parse(sessao));
     } else if (window.location.pathname.endsWith('/admin')) {
-        // SE DIGITOU /admin NO LINK, ESCONDE O LOGIN E CHAMA A SENHA MESTRE
         document.getElementById('login-screen').style.display = 'none';
         setTimeout(validarAcessoAdmin, 500); 
     }
 });
 
 async function fazerLogin() {
-    // CORREÇÃO ANTI-CACHE: Pega o input com ID novo OU ID velho
     const inputIdentificacao = document.getElementById('identificacao') || document.getElementById('numero-acesso');
     
     if (!inputIdentificacao) {
@@ -95,13 +92,15 @@ function aplicarPermissoes(user) {
     let temDev = false;
     
     sistemasOperacionais.forEach(sys => {
-        if (user.role === 'admin' || sys.perfis.includes(user.role)) {
+        // MUDANÇA AQUI: Admin e Gestão agora veem todos os cartões operacionais
+        if (user.role === 'admin' || user.role === 'gestao' || sys.perfis.includes(user.role)) {
             container.innerHTML += `<a href="${sys.link}" target="_blank" class="card ${sys.cor}"><div class="icon-wrapper"><svg viewBox="0 0 24 24">${sys.svg}</svg></div><h3>${sys.titulo}</h3><p>${sys.desc}</p><button>ACESSAR</button></a>`;
         }
     });
 
     sistemasEmDesenvolvimento.forEach(sys => {
-        if (user.role === 'admin' || sys.perfis.includes(user.role)) {
+        // MUDANÇA AQUI: Admin e Gestão agora veem todos os cartões em desenvolvimento
+        if (user.role === 'admin' || user.role === 'gestao' || sys.perfis.includes(user.role)) {
             devContainer.innerHTML += `<a href="${sys.link}" target="_blank" class="card ${sys.cor}"><div class="icon-wrapper"><svg viewBox="0 0 24 24">${sys.svg}</svg></div><h3>${sys.titulo}</h3><p>${sys.desc}</p><button>ACESSAR BETA</button></a>`;
             temDev = true;
         }
@@ -132,11 +131,9 @@ async function validarAcessoAdmin() {
 }
 
 async function carregarPainelAdminCompleto() {
-    // Só tenta carregar se a senha mestre estiver configurada, mas a verificação real ocorre no backend
     document.getElementById('main-content').style.display = 'none';
     document.getElementById('admin-panel-ui').style.display = 'block';
     
-    // Tratamento para não bugar caso acesse o /admin antes de ter feito o primeiro login
     const sessaoStr = localStorage.getItem('usuarioPortalCSIPRC');
     const token = sessaoStr ? JSON.parse(sessaoStr).token : 'modo-recuperacao';
 
@@ -149,8 +146,6 @@ async function carregarListaUsuarios(tokenParam) {
         const res = await fetch('/api/admin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            // Como você está acessando direto pelo /admin para recuperar, mandamos a Senha Mestre!
-            // O backend da Vercel que nós configuramos lá atrás libera se a Senha Mestre bater, mesmo sem o token.
             body: JSON.stringify({ action: 'LISTAR', masterPassword: masterPass, token: tokenParam })
         });
         const data = await res.json();
